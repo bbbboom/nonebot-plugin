@@ -10,3 +10,6 @@
 
 ## 复读机
 兼备复读、精确回复、模糊回复的仿生人
+
+## 使用说明
+文档：https://fz6m.github.io/plugin-press/
