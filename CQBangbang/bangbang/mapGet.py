@@ -9,6 +9,7 @@ from PIL import ImageFont
 from . import cut
 
 async def mapGet(id,bot,qun):
+    comRatio = 3
     sendMsg = '[CQ:image,file=bestdoriMap_'+ str(id) + '.jpg]'
     # map image path
     imageP = '../data/image/bestdoriMap_' + str(id) + '.jpg'
@@ -247,7 +248,7 @@ async def mapGet(id,bot,qun):
     drawPlus.text((30,plusHeight+marginPlus-10), 'Source: Bestdori - collectBot', 'white', fontSource)
 
     #存图片
-    backgroundPlus.resize((int((plusWidth+marginPlus*2)/3),int((plusHeight+marginPlus*2)/3))).convert('RGB').save(imageP,quality=50) 
+    backgroundPlus.resize((int((plusWidth+marginPlus*2)/comRatio),int((plusHeight+marginPlus*2)/comRatio))).convert('RGB').save(imageP,quality=50) 
 
     # send
     await bot.send_msg(group_id=int(qun),message=sendMsg)
