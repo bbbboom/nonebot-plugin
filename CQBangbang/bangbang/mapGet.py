@@ -46,7 +46,7 @@ async def mapGet(id,bot,qun):
     notes = jsonStr['post']['notes']
     # info
     songTime = jsonStr['post']['graphicsSimulator'][-1]['time']
-    author = jsonStr['post']['author']['nickname']
+    author = jsonStr['post']['author']['username']
     timestamp = jsonStr['post']['time']
     level = jsonStr['post']['level']
     artists = jsonStr['post']['artists']
@@ -74,6 +74,7 @@ async def mapGet(id,bot,qun):
     line = Image.open(p+'static/line.png').resize((int(5*scale),lineLength))
     lineB = Image.open(p+'static/line.png').resize((int(20*scale),lineLength))
     crossLine = Image.open(p+'static/line.png')
+    lineLangB = Image.open(p+'static/lineLang.png').resize((lineDistance,int(30*scale)))
     lineBpm = Image.open(p+'static/lineBpm.png').resize((lineDistance*8,int(10*scale)))
     for i in range(0,8):
         if i == 0 or i == 7:
@@ -95,6 +96,7 @@ async def mapGet(id,bot,qun):
     contiguousNote = [0,0]
     halfNote = int(305*scale/2)
     halfHeight = int(110*scale/2) - int(5*scale)
+    startMarkA,startMarkB = 0,0
     # icon上图
     for note in notes:
         if note['type'] == 'Note':
@@ -119,59 +121,108 @@ async def mapGet(id,bot,qun):
                     contiguousNote[0],contiguousNote[1] = note['beat'],note['lane']
             elif note['note'] == 'Slide':
                 if note['pos'] == 'A':
-                    if posLockA == 1:
-                        try :
+                    try :
+                        if note['start'] == True:
+                            # start lang
+                            posA[0],posA[1] = note['beat'],note['lane']
+                            background.paste(iconLang,(margin+(int(note['lane'])-1)*lineDistance,
+                            int(lineLength+margin-noteLength*note['beat'])),iconLang)
+                            # back
+                            startMarkA = 1
+                            backA[0],backA[1] = note['beat'],note['lane']
+                    except:
+                        try:
                             if note['end'] == True:
+                                # end lang
                                 posA[2],posA[3] = note['beat'],note['lane']
+                                # backA = [0,0]
                                 draw.polygon([(posA[1]-1)*lineDistance+margin+xSEO,int(lineLength+margin-noteLength*posA[0]+halfLang),
                                 posA[1]*lineDistance+margin-xSEO,int(lineLength+margin-noteLength*posA[0]+halfLang),
                                 posA[3]*lineDistance+margin-xSEO,int(lineLength+margin-noteLength*posA[2]+halfLang),
                                 (posA[3]-1)*lineDistance+margin+xSEO,int(lineLength+margin-noteLength*posA[2]+halfLang)],fill=color,)
                                 posLockA = 0
+                                background.paste(iconLang,(margin+(int(note['lane'])-1)*lineDistance,
+                                int(lineLength+margin-noteLength*note['beat'])),iconLang)
+                                # 重画
+                                if startMarkA == 1:
+                                    background.paste(iconLang,(margin+(int(backA[1])-1)*lineDistance,
+                                    int(lineLength+margin-noteLength*backA[0])),iconLang)
+                                    startMarkA = 0
+                                else:
+                                    background.paste(lineLangB,(margin+(int(backA[1])-1)*lineDistance,
+                                    int(lineLength+margin-noteLength*backA[0]+halfLang)))
                         except:
                             posA[2],posA[3] = note['beat'],note['lane']
                             draw.polygon([(posA[1]-1)*lineDistance+margin+xSEO,int(lineLength+margin-noteLength*posA[0]+halfLang),
                             posA[1]*lineDistance+margin-xSEO,int(lineLength+margin-noteLength*posA[0]+halfLang),
                             posA[3]*lineDistance+margin-xSEO,int(lineLength+margin-noteLength*posA[2]+halfLang),
-                            (posA[3]-1)*lineDistance+margin+xSEO,int(lineLength+margin-noteLength*posA[2]+halfLang)],fill=color)
-                            posA[0],posA[1] = posA[2],posA[3]
-                        # 重画上一个
-                        if backA!=[0,0]:
-                            background.paste(iconLang,(margin+(int(backA[1])-1)*lineDistance,
-                            int(lineLength+margin-noteLength*backA[0])),iconLang)
-                    else:
-                        posLockA = 1
-                        posA[0],posA[1] = note['beat'],note['lane']
-                    backA[0],backA[1] = note['beat'],note['lane']
+                            (posA[3]-1)*lineDistance+margin+xSEO,int(lineLength+margin-noteLength*posA[2]+halfLang)],fill=color,)
+                            posA[0],posA[1] = note['beat'],note['lane']
+                            # 本条
+                            background.paste(lineLangB,(margin+(int(note['lane'])-1)*lineDistance,
+                            int(lineLength+margin-noteLength*note['beat']+halfLang)))
+                            if startMarkA == 1:
+                                background.paste(iconLang,(margin+(int(backA[1])-1)*lineDistance,
+                                int(lineLength+margin-noteLength*backA[0])),iconLang)
+                                startMarkA = 0
+                            else:
+                                background.paste(lineLangB,(margin+(int(backA[1])-1)*lineDistance,
+                                int(lineLength+margin-noteLength*backA[0]+halfLang)))
+                            # 记录本身
+                            backA[0],backA[1] = note['beat'],note['lane']
                 elif note['pos'] == 'B':
-                    if posLockB == 1:
-                        try :
+                    try :
+                        if note['start'] == True:
+                            # start lang
+                            posB[0],posB[1] = note['beat'],note['lane']
+                            background.paste(iconLang,(margin+(int(note['lane'])-1)*lineDistance,
+                            int(lineLength+margin-noteLength*note['beat'])),iconLang)
+                            # back
+                            startMarkB = 1
+                            backB[0],backB[1] = note['beat'],note['lane']
+                    except:
+                        try:
                             if note['end'] == True:
+                                # end lang
                                 posB[2],posB[3] = note['beat'],note['lane']
+                                # backA = [0,0]
                                 draw.polygon([(posB[1]-1)*lineDistance+margin+xSEO,int(lineLength+margin-noteLength*posB[0]+halfLang),
                                 posB[1]*lineDistance+margin-xSEO,int(lineLength+margin-noteLength*posB[0]+halfLang),
                                 posB[3]*lineDistance+margin-xSEO,int(lineLength+margin-noteLength*posB[2]+halfLang),
-                                (posB[3]-1)*lineDistance+margin+xSEO,int(lineLength+margin-noteLength*posB[2]+halfLang)],fill=color)
+                                (posB[3]-1)*lineDistance+margin+xSEO,int(lineLength+margin-noteLength*posB[2]+halfLang)],fill=color,)
                                 posLockB = 0
+                                background.paste(iconLang,(margin+(int(note['lane'])-1)*lineDistance,
+                                int(lineLength+margin-noteLength*note['beat'])),iconLang)
+                                # 重画
+                                if startMarkB == 1:
+                                    background.paste(iconLang,(margin+(int(backB[1])-1)*lineDistance,
+                                    int(lineLength+margin-noteLength*backB[0])),iconLang)
+                                    startMarkB = 0
+                                else:
+                                    background.paste(lineLangB,(margin+(int(backB[1])-1)*lineDistance,
+                                    int(lineLength+margin-noteLength*backB[0]+halfLang)))
                         except:
                             posB[2],posB[3] = note['beat'],note['lane']
                             draw.polygon([(posB[1]-1)*lineDistance+margin+xSEO,int(lineLength+margin-noteLength*posB[0]+halfLang),
                             posB[1]*lineDistance+margin-xSEO,int(lineLength+margin-noteLength*posB[0]+halfLang),
                             posB[3]*lineDistance+margin-xSEO,int(lineLength+margin-noteLength*posB[2]+halfLang),
-                            (posB[3]-1)*lineDistance+margin+xSEO,int(lineLength+margin-noteLength*posB[2]+halfLang)],fill=color)
-                            posB[0],posB[1] = posB[2],posB[3]
-                        # 重画上一个
-                        if backB!=[0,0]:
-                            background.paste(iconLang,(margin+(int(backB[1])-1)*lineDistance,
-                            int(lineLength+margin-noteLength*backB[0])),iconLang)
-                    else:
-                        posLockB = 1
-                        posB[0],posB[1] = note['beat'],note['lane']
-                    backB[0],backB[1] = note['beat'],note['lane']
+                            (posB[3]-1)*lineDistance+margin+xSEO,int(lineLength+margin-noteLength*posB[2]+halfLang)],fill=color,)
+                            posB[0],posB[1] = note['beat'],note['lane']
+                            # 本条
+                            background.paste(lineLangB,(margin+(int(note['lane'])-1)*lineDistance,
+                            int(lineLength+margin-noteLength*note['beat']+halfLang)))
+                            if startMarkB == 1:
+                                background.paste(iconLang,(margin+(int(backB[1])-1)*lineDistance,
+                                int(lineLength+margin-noteLength*backB[0])),iconLang)
+                                startMarkB = 0
+                            else:
+                                background.paste(lineLangB,(margin+(int(backB[1])-1)*lineDistance,
+                                int(lineLength+margin-noteLength*backB[0]+halfLang)))
+                            # 记录本身
+                            backB[0],backB[1] = note['beat'],note['lane']
                 else:
-                    print('error:note-pos')
-                background.paste(iconLang,(margin+(int(note['lane'])-1)*lineDistance,
-                int(lineLength+margin-noteLength*note['beat'])),iconLang)
+                    print('error:note lines')
+                    return 
         else:
             background.paste(lineBpm,(margin,
             int(lineLength+margin-noteLength*note['beat']+halfHeight)))

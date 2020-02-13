@@ -62,7 +62,11 @@ async def info(status,title = '',artists = '',cover = '',level = '',timestamp = 
                         str(timestamp.tm_hour) + ':' +
                         str(timestamp.tm_min))
             m, s = divmod(songTime, 60)
-            songTime = str(int(m)) + ':' + str(s)[3:5]
+            if str(s)[1] == '.':
+                s = '0' + str(s)[0]
+            else:
+                s = str(s)[0:2]
+            songLong = str(int(m)) + ':' + str(s)
             background = Image.open(p+"static/bk.png").resize((width,height))
             image = Image.open(coverPath).convert('RGBA').resize((int(width-2*borderDistance),int(width-2*borderDistance)))
             background.paste(image,(borderDistance,borderDistance),image)

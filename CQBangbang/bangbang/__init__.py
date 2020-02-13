@@ -15,6 +15,36 @@ async def bestdori(context):
     shield = await main.qunShield(int(qun))
     if shield == 1:
         msg = str(context["message"])
+        # base info
+        try:
+            if msg.find('kkp ') != -1:
+                msg = int(msg[msg.find('kkp '):][4:])
+                if msg > 900 and msg < 10000:
+                    await main.baseSearch(bot,qun,msg)
+        except:
+            pass
+        try:
+            if msg.find('k ') != -1:
+                msg = int(msg[msg.find('k '):][2:])
+                if msg > 900 and msg < 10000:
+                    await main.baseSearch(bot,qun,msg)
+        except:
+            pass
+        # detail info
+        try:
+            if msg.find('search ') != -1:
+                msg = int(msg[msg.find('search '):][7:])
+                if msg > 900 and msg < 10000:
+                    await main.serchMap(bot,qun,msg)
+        except:
+            pass
+        try:
+            if msg.find('serch ') != -1:
+                msg = int(msg[msg.find('serch '):][6:])
+                if msg > 900 and msg < 10000:
+                    await main.serchMap(bot,qun,msg)
+        except:
+            pass
         try:
             if msg.find('.search') != -1:
                 msg = int(msg[msg.find('.search'):][7:])
@@ -23,8 +53,23 @@ async def bestdori(context):
         except:
             pass
         try:
+            if msg.find('.serch') != -1:
+                msg = int(msg[msg.find('.serch'):][6:])
+                if msg > 900 and msg < 10000:
+                    await main.serchMap(bot,qun,msg)
+        except:
+            pass
+        # get map
+        try:
             if msg.find('.map') != -1:
                 msg = int(msg[msg.find('.map'):][4:])
+                if msg > 900 and msg < 10000:
+                    await main.getMap(bot,qun,msg)
+        except:
+            pass
+        try:
+            if msg.find('map ') != -1:
+                msg = int(msg[msg.find('map '):][4:])
                 if msg > 900 and msg < 10000:
                     await main.getMap(bot,qun,msg)
         except:

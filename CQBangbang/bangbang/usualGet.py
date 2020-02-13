@@ -35,9 +35,9 @@ async def new(songs):
                             newSongs += '\n'
                         songLong = song
                         newSongs += ('【新谱' + str(song['id']) +'】\n' +
-                                        'Music: ' + str(song['title']) + '\n' +
+                                        '歌曲: ' + str(song['title']) + '\n' +
                                         'Level: ' + str(song['level']) + '\n' +
-                                        'Author: ' + str(song['author']['nickname']) + '\n'
+                                        '作者: ' + str(song['author']['username']) + '\n'
                                         '介绍: '
                                         )
                         for j in song['content']:
@@ -85,12 +85,12 @@ async def serch(id):
     try:
         imagePath = '../data/image/bestdori_' + str(id) + '.jpg'
         if os.path.exists(imagePath):
-            songInfo += '[CQ:image,file=bestdori_'+ str(id) + '.jpg]\n'
+            songInfo += '[CQ:image,file=bestdori_'+ str(id) + '.jpg]'
         else:
             # 下载
             imageCover = requests.get(post['song']['cover'], stream=True)
             open(imagePath, 'wb').write(imageCover.content)
-            songInfo += '[CQ:image,file=bestdori_'+ str(id) + '.jpg]\n'
+            songInfo += '[CQ:image,file=bestdori_'+ str(id) + '.jpg]'
     except:
         songInfo += '封面获取失败\n'
     # 时间格式化
@@ -101,14 +101,18 @@ async def serch(id):
                 str(uptime.tm_hour) + ':' +
                 str(uptime.tm_min))
     m, s = divmod(songLong, 60)
-    songLong = str(int(m)) + ':' + str(s)[3:5]
+    if str(s)[1] == '.':
+        s = '0' + str(s)[0]
+    else:
+        s = str(s)[0:2]
+    songLong = str(int(m)) + ':' + str(s)
     # 添加信息
-    songInfo += ('Music: ' + str(post['title']) + '\n' + 
-                'Artists: ' + str(post['artists']) + '\n' + 
+    songInfo += ('歌曲: ' + str(post['title']) + '\n' + 
+                '歌手: ' + str(post['artists']) + '\n' + 
                 'Level: ' + str(post['level']) + '\n' + 
                 'ID: ' + str(id) + '\n' +
-                'Time: ' + str(songLong) + '\n' +
-                'Author: ' + str(post['author']['nickname']) + '\n'
+                '时长: ' + str(songLong) + '\n' +
+                '作者: ' + str(post['author']['username']) + '\n'
                 'Update: ' + str(uptime) + '\n' +
                 '介绍: '
                 )
@@ -117,4 +121,45 @@ async def serch(id):
             songInfo += str(j['data']) + ' '
     return songInfo
 
-    
+# base search
+async def base(id):
+    # 查缓存
+    jsonPath = 'bangbang_data/' + str(id) + '.json'
+    if os.path.exists(jsonPath):
+        # 有缓存
+        pass
+    else:
+        # get
+        try:
+            jsonStr = requests.get('https://bestdori.com/api/post/details?id=' + str(id)).json()
+            if jsonStr['result']!=True:
+                print('serch:get失败')
+                return 0
+            # 写缓存
+            with open(jsonPath,'w') as f:
+                f.write(json.dumps(jsonStr))
+        except:
+            return 
+    # 读缓存
+    with open(jsonPath,'r',encoding='utf-8') as f:
+        jsonStr = json.loads(f.read())
+    # send msg
+    songInfo = ''
+    post = jsonStr['post']
+    songLong = post['graphicsSimulator'][-1]['time']
+    # 时间格式化
+    m, s = divmod(songLong, 60)
+    if str(s)[1] == '.':
+        s = '0' + str(s)[0]
+    else:
+        s = str(s)[0:2]
+    songLong = str(int(m)) + ':' + str(s)
+    # 添加信息
+    songInfo += ('您的 P 来了喵(=￣ω￣=)~\n' + str(post['title']) + 
+                '<' + str(id) + '>\n' +
+                'Level ' + str(post['level']) + 
+                ' ' + str(songLong) + '\n@' +
+                str(post['author']['username']) 
+                )
+    return songInfo
+

@@ -21,6 +21,12 @@ async def serchMap(bot,qun,id):
     if songInfo != 0 :
         await bot.send_msg(group_id=int(qun),message=str(songInfo))
 
+async def baseSearch(bot,qun,id):
+    songInfo = await usualGet.base(id)
+    if songInfo != 0:
+        await bot.send_msg(group_id=int(qun),message=str(songInfo))
+
+
 async def getMap(bot,qun,id):
     await mapGet.mapGet(id,bot,qun)
 
