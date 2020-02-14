@@ -1,9 +1,10 @@
 # -*- coding:utf-8 -*- 
 import os
 import requests
-import json
+import ujson
 import time
 import aiofiles
+from . import utils
 
 # get新谱列表
 # model = 1 -> get new list | model = 2 -> get key list
@@ -14,7 +15,7 @@ async def get(model,key = ''):
         postData = {"following":False,"categoryName":"SELF_POST","categoryId":"chart","order":"TIME_DESC","limit":20,"offset":0}
     else:
         postData = {"search":str(key),"following":False,"categoryName":"SELF_POST","categoryId":"chart","tags":[],"order":"TIME_DESC","limit":20,"offset":0}
-    jsonStr = requests.post(url,data=json.dumps(postData),headers = header,timeout = 5).json()
+    jsonStr = requests.post(url,data=ujson.dumps(postData),headers = header,timeout = 5).json()
     if jsonStr['result'] != True:
         print('requests lose')
         return 'error'
@@ -48,9 +49,15 @@ async def new(songs):
                                         '作者: ' + str(song['author']['username']) + '\n'
                                         '介绍: '
                                         )
+                        newSongsContent = ''
                         for j in song['content']:
                             if j['type'] == 'text':
-                                newSongs += str(j['data']) + ' '
+                                if await utils.stringLenLimit(newSongsContent+str(j['data'])) == 1:
+                                    newSongsContent += str(j['data']) + ' '
+                                else:
+                                    newSongsContent += '....'
+                                    break
+                        newSongs += newSongsContent
             if newSongs != '':
                 mark = 1
     async with aiofiles.open(savePath,'w') as f:
@@ -78,12 +85,12 @@ async def search(id):
                 return 0
             # 写缓存
             async with aiofiles.open(jsonPath,'w') as f:
-                await f.write(json.dumps(jsonStr))
+                await f.write(ujson.dumps(jsonStr))
         except:
             return 
     # 读缓存
     async with aiofiles.open(jsonPath,'r',encoding='utf-8') as f:
-        jsonStr = json.loads(await f.read())
+        jsonStr = ujson.loads(await f.read())
     # send msg
     songInfo = ''
     post = jsonStr['post']
@@ -148,12 +155,12 @@ async def base(id):
                 return 0
             # 写缓存
             async with aiofiles.open(jsonPath,'w') as f:
-                await f.write(json.dumps(jsonStr))
+                await f.write(ujson.dumps(jsonStr))
         except:
             return 
     # 读缓存
     async with aiofiles.open(jsonPath,'r',encoding='utf-8') as f:
-        jsonStr = json.loads(await f.read())
+        jsonStr = ujson.loads(await f.read())
     # send msg
     songInfo = ''
     post = jsonStr['post']

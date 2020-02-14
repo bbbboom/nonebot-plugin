@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*- 
 import os
 import requests
-import json
+import ujson
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
@@ -33,12 +33,12 @@ async def mapGet(id,bot,qun):
                 print('get失败')
                 return
             async with aiofiles.open(savePath,'w') as f:
-                await f.write(json.dumps(jsonStr))
+                await f.write(ujson.dumps(jsonStr))
         except:
             return
     # 读缓存
     async with aiofiles.open(savePath,'r',encoding='utf-8') as f:
-        jsonStr = json.loads(await f.read())
+        jsonStr = ujson.loads(await f.read())
     # 做底图
     # 压缩比例
     scale = 0.2
@@ -59,10 +59,10 @@ async def mapGet(id,bot,qun):
     try:
         # info封面
         cover = jsonStr['post']['song']['cover']
-        cutStatus = await cut.info(1,title,artists,cover,level,timestamp,author,songTime,id)
+        cutStatus = await cut.info(1,title,artists,cover,level,timestamp,author,songTime,id,comRatio)
     except:
         cutStatus = await cut.info(0,title = title,artists = artists,cover = '',level = level,
-        timestamp = timestamp,author = author,songTime = songTime,id = id) 
+        timestamp = timestamp,author = author,songTime = songTime,id = id,comRatio = comRatio) 
     try:
         maxBeat = notes[-1]['beat']
     except:
@@ -239,20 +239,24 @@ async def mapGet(id,bot,qun):
     marginPlus = margin
     plusWidth = width*(cutNumber + 1) 
     plusHeight = int(height/cutNumber) 
-    backgroundPlus = Image.open(p+"static/bk.png").resize((plusWidth+marginPlus*2,plusHeight+marginPlus*2))
+    backgroundPlus = Image.open(p+"static/bk.png").resize((int((plusWidth+marginPlus*2)/comRatio),
+    int((plusHeight+marginPlus*2)/comRatio)))
     for i in range(cutNumber):
-        backgroundPlus.paste(background.crop((0,height-(i+1)*plusHeight,width,height-i*plusHeight)),
-        ((i+1)*width+marginPlus,marginPlus))
+        backgroundPlus.paste(background.crop((0,height-(i+1)*plusHeight,width,height-i*plusHeight))
+        .resize((int(width/comRatio),int((height-i*plusHeight-(height-(i+1)*plusHeight))/comRatio))),
+        (int(((i+1)*width+marginPlus)/comRatio),int(marginPlus/comRatio)))
     if cutStatus != 'error':
         # 加封面
-        backgroundPlus.paste(cutStatus,(marginPlus,marginPlus+int(plusHeight/2-(width+500)/2))) # 500 = borderDistance * 10
+        backgroundPlus.paste(cutStatus,(int(marginPlus/comRatio),
+        int((marginPlus+int(plusHeight/2-(width+500)/2))/comRatio))) # 500 = borderDistance * 10
     # 来源
-    fontSource = ImageFont.truetype("consola.ttf",25)
+    fontSource = ImageFont.truetype("consola.ttf",int(25/comRatio))
     drawPlus = ImageDraw.Draw(backgroundPlus)
-    drawPlus.text((30,plusHeight+marginPlus-10), 'Source: Bestdori - collectBot', 'white', fontSource)
+    drawPlus.text((int(30/comRatio),int((plusHeight+marginPlus-10)/comRatio)),
+     'Source: Bestdori - collectBot', 'white', fontSource)
 
     #存图片
-    backgroundPlus.resize((int((plusWidth+marginPlus*2)/comRatio),int((plusHeight+marginPlus*2)/comRatio))).convert('RGB').save(imageP,quality=50) 
+    backgroundPlus.convert('RGB').save(imageP,quality=50) 
 
     # send
     await bot.send_msg(group_id=int(qun),message=sendMsg)

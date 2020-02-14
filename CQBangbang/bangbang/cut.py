@@ -6,7 +6,7 @@ from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
 
-async def info(status,title = '',artists = '',cover = '',level = '',timestamp = '',author = '',songTime = '',id = ''):
+async def info(status,title = '',artists = '',cover = '',level = '',timestamp = '',author = '',songTime = '',id = '',comRatio = 3):
     if status == 1:
         # basic parameters
         scale = 0.2
@@ -45,7 +45,8 @@ async def info(status,title = '',artists = '',cover = '',level = '',timestamp = 
                     '\n\nUpdate: ' + str(timestamp))
         draw = ImageDraw.Draw(background)
         draw.text((borderDistance,width),infoText, 'white', font)
-        return background
+        comRatio = int(comRatio)
+        return background.resize((int(width/comRatio),int(height/comRatio)))
     else:
         try:
             # basic parameters
@@ -83,6 +84,7 @@ async def info(status,title = '',artists = '',cover = '',level = '',timestamp = 
                         '\n\nUpdate: ' + str(timestamp))
             draw = ImageDraw.Draw(background)
             draw.text((borderDistance,width),infoText, 'white', font)
-            return background
+            comRatio = int(comRatio)
+            return background.resize((int(width/comRatio),int(height/comRatio)))
         except:
             return 'error'
