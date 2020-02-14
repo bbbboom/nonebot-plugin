@@ -88,7 +88,10 @@ async def search(id):
     songInfo = ''
     post = jsonStr['post']
     uptime = post['time']
-    songLong = post['graphicsSimulator'][-1]['time']
+    if type(post['graphicsSimulator'][-1]['time']) is list:
+        songLong = post['graphicsSimulator'][-1]['time'][0]
+    else:
+        songLong = post['graphicsSimulator'][-1]['time']
     # cover下载
     try:
         imagePath = '../data/image/bestdori_' + str(id) + '.jpg'
@@ -155,7 +158,10 @@ async def base(id):
     # send msg
     songInfo = ''
     post = jsonStr['post']
-    songLong = post['graphicsSimulator'][-1]['time']
+    if type(post['graphicsSimulator'][-1]['time']) is list:
+        songLong = post['graphicsSimulator'][-1]['time'][0]
+    else:
+        songLong = post['graphicsSimulator'][-1]['time']
     # 时间格式化
     m, s = divmod(songLong, 60)
     if str(s)[1] == '.':

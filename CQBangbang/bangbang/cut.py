@@ -26,7 +26,11 @@ async def info(status,title = '',artists = '',cover = '',level = '',timestamp = 
                     str(timestamp.tm_hour) + ':' +
                     str(timestamp.tm_min))
         m, s = divmod(songTime, 60)
-        songTime = str(int(m)) + ':' + str(s)[3:5]
+        if str(s)[1] == '.':
+            s = '0' + str(s)[0]
+        else:
+            s = str(s)[0:2]
+        songTime = str(int(m)) + ':' + str(s)
         imageCover = requests.get(cover, stream=True)
         open(coverPath, 'wb').write(imageCover.content)
         background = Image.open(p+"static/bk.png").resize((width,height))

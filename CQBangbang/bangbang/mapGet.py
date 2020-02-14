@@ -47,7 +47,10 @@ async def mapGet(id,bot,qun):
     # notes
     notes = jsonStr['post']['notes']
     # info
-    songTime = jsonStr['post']['graphicsSimulator'][-1]['time']
+    if type(jsonStr['post']['graphicsSimulator'][-1]['time']) is list:
+        songTime = jsonStr['post']['graphicsSimulator'][-1]['time'][0]
+    else:
+        songTime = jsonStr['post']['graphicsSimulator'][-1]['time']
     author = jsonStr['post']['author']['username']
     timestamp = jsonStr['post']['time']
     level = jsonStr['post']['level']
