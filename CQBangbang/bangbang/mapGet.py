@@ -7,6 +7,7 @@ from PIL import ImageDraw
 from PIL import ImageFont
 # from PIL import ImageFilter
 from . import cut
+import aiofiles
 
 async def mapGet(id,bot,qun):
     comRatio = 3
@@ -31,13 +32,13 @@ async def mapGet(id,bot,qun):
             if jsonStr['result']!=True:
                 print('get失败')
                 return
-            with open(savePath,'w') as f:
-                f.write(json.dumps(jsonStr))
+            async with aiofiles.open(savePath,'w') as f:
+                await f.write(json.dumps(jsonStr))
         except:
             return
     # 读缓存
-    with open(savePath,'r',encoding='utf-8') as f:
-        jsonStr = json.loads(f.read())
+    async with aiofiles.open(savePath,'r',encoding='utf-8') as f:
+        jsonStr = json.loads(await f.read())
     # 做底图
     # 压缩比例
     scale = 0.2

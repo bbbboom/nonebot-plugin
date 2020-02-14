@@ -3,6 +3,7 @@ import os
 import requests
 import json
 import time
+import aiofiles
 
 # get新谱列表
 # model = 1 -> get new list | model = 2 -> get key list
@@ -13,7 +14,7 @@ async def get(model,key = ''):
         postData = {"following":False,"categoryName":"SELF_POST","categoryId":"chart","order":"TIME_DESC","limit":20,"offset":0}
     else:
         postData = {"search":str(key),"following":False,"categoryName":"SELF_POST","categoryId":"chart","tags":[],"order":"TIME_DESC","limit":20,"offset":0}
-    jsonStr = requests.post(url,data=json.dumps(postData),headers = header).json()
+    jsonStr = requests.post(url,data=json.dumps(postData),headers = header,timeout = 5).json()
     if jsonStr['result'] != True:
         print('requests lose')
         return 'error'
@@ -29,8 +30,8 @@ async def new(songs):
     savePath = 'bangbang_data/save.txt'
     if songs != 'error':
         if os.path.exists(savePath):
-            with open(savePath,'r') as f:
-                saveSongs = f.read()
+            async with aiofiles.open(savePath,'r') as f:
+                saveSongs = await f.read()
                 for song in songs:
                     songID = song['id']
                     if saveSongs.find(str(songID)) != -1:
@@ -52,11 +53,11 @@ async def new(songs):
                                 newSongs += str(j['data']) + ' '
             if newSongs != '':
                 mark = 1
-    with open(savePath,'w') as f:
+    async with aiofiles.open(savePath,'w') as f:
         songIDs = ''
         for song in songs:
             songIDs += str(song['id']) + '\n'
-        f.write(songIDs)
+        await f.write(songIDs)
     if mark == 1:
         return newSongs
     return 'empty'
@@ -76,13 +77,13 @@ async def search(id):
                 print('serch:get失败')
                 return 0
             # 写缓存
-            with open(jsonPath,'w') as f:
-                f.write(json.dumps(jsonStr))
+            async with aiofiles.open(jsonPath,'w') as f:
+                await f.write(json.dumps(jsonStr))
         except:
             return 
     # 读缓存
-    with open(jsonPath,'r',encoding='utf-8') as f:
-        jsonStr = json.loads(f.read())
+    async with aiofiles.open(jsonPath,'r',encoding='utf-8') as f:
+        jsonStr = json.loads(await f.read())
     # send msg
     songInfo = ''
     post = jsonStr['post']
@@ -96,7 +97,8 @@ async def search(id):
         else:
             # 下载
             imageCover = requests.get(post['song']['cover'], stream=True)
-            open(imagePath, 'wb').write(imageCover.content)
+            async with aiofiles.open(imagePath, 'wb') as f:
+                await write(imageCover.content)
             songInfo += '[CQ:image,file=bestdori_'+ str(id) + '.jpg]'
     except:
         songInfo += '封面获取失败\n'
@@ -143,13 +145,13 @@ async def base(id):
                 print('serch:get失败')
                 return 0
             # 写缓存
-            with open(jsonPath,'w') as f:
-                f.write(json.dumps(jsonStr))
+            async with aiofiles.open(jsonPath,'w') as f:
+                await f.write(json.dumps(jsonStr))
         except:
             return 
     # 读缓存
-    with open(jsonPath,'r',encoding='utf-8') as f:
-        jsonStr = json.loads(f.read())
+    async with aiofiles.open(jsonPath,'r',encoding='utf-8') as f:
+        jsonStr = json.loads(await f.read())
     # send msg
     songInfo = ''
     post = jsonStr['post']

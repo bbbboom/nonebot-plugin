@@ -2,6 +2,7 @@
 from . import usualGet
 from . import mapGet
 import os
+import aiofiles
 
 # 查新
 async def getNew(bot):
@@ -11,8 +12,8 @@ async def getNew(bot):
     else:
         sendQunPath = 'bangbang_data/send.txt'
         if os.path.exists(sendQunPath):
-            with open(sendQunPath,'r') as f:
-                lines = f.readlines()
+            async with aiofiles.open(sendQunPath,'r') as f:
+                lines = await f.readlines()
             for line in lines:
                 qun = int(line.strip())
                 await bot.send_msg(group_id=int(qun),message=str(new))
@@ -42,8 +43,8 @@ async def getMap(bot,qun,id):
 async def qunShield(qun):
     txtPath = 'bangbang_data/qunShield.txt'
     if os.path.exists(txtPath):
-        with open(txtPath,'r') as f:
-            lines = f.readlines()
+        async with aiofiles.open(txtPath,'r') as f:
+            lines = await f.readlines()
             for line in lines:
                 if int(qun) == int(line.strip()):
                     return 0
