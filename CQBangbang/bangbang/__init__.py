@@ -2,6 +2,7 @@
 from nonebot import *
 from aiocqhttp.exceptions import Error as CQHttpError
 from . import main
+from . import command
 
 bot = get_bot()
 
@@ -16,61 +17,22 @@ async def bestdori(context):
     if shield == 1:
         msg = str(context["message"])
         # base info
-        try:
-            if msg.find('kkp ') != -1:
-                msg = int(msg[msg.find('kkp '):][4:])
-                if msg > 900 and msg < 10000:
-                    await main.baseSearch(bot,qun,msg)
-        except:
-            pass
-        try:
-            if msg.find('k ') != -1:
-                msg = int(msg[msg.find('k '):][2:])
-                if msg > 900 and msg < 10000:
-                    await main.baseSearch(bot,qun,msg)
-        except:
-            pass
+        baseKeyList = ['k','kp','kkp']
+        code = await command.reasonable(msg,baseKeyList)
+        if code[0] == 1:
+            await main.baseSearch(bot,qun,code[1])
         # detail info
-        try:
-            if msg.find('search ') != -1:
-                msg = int(msg[msg.find('search '):][7:])
-                if msg > 900 and msg < 10000:
-                    await main.serchMap(bot,qun,msg)
-        except:
-            pass
-        try:
-            if msg.find('serch ') != -1:
-                msg = int(msg[msg.find('serch '):][6:])
-                if msg > 900 and msg < 10000:
-                    await main.serchMap(bot,qun,msg)
-        except:
-            pass
-        try:
-            if msg.find('.search') != -1:
-                msg = int(msg[msg.find('.search'):][7:])
-                if msg > 900 and msg < 10000:
-                    await main.serchMap(bot,qun,msg)
-        except:
-            pass
-        try:
-            if msg.find('.serch') != -1:
-                msg = int(msg[msg.find('.serch'):][6:])
-                if msg > 900 and msg < 10000:
-                    await main.serchMap(bot,qun,msg)
-        except:
-            pass
+        detailKeyList = ['serch','search']
+        code = await command.reasonable(msg,detailKeyList)
+        if code[0] == 1:
+            await main.searchMap(bot,qun,code[1])
         # get map
-        try:
-            if msg.find('.map') != -1:
-                msg = int(msg[msg.find('.map'):][4:])
-                if msg > 900 and msg < 10000:
-                    await main.getMap(bot,qun,msg)
-        except:
-            pass
-        try:
-            if msg.find('map ') != -1:
-                msg = int(msg[msg.find('map '):][4:])
-                if msg > 900 and msg < 10000:
-                    await main.getMap(bot,qun,msg)
-        except:
-            pass
+        mapKeyList = ['map']
+        code = await command.reasonable(msg,mapKeyList)
+        if code[0] == 1:
+            await main.getMap(bot,qun,code[1])
+        # name search
+        nameKeyList = ['s','sp','ssp']
+        code = await command.reasonable(msg,nameKeyList,model='searchName')
+        if code[0] == 1:
+            await main.searchKey(bot,qun,code[1])

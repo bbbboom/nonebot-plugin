@@ -5,15 +5,22 @@ import json
 import time
 
 # get新谱列表
-async def get():
+# model = 1 -> get new list | model = 2 -> get key list
+async def get(model,key = ''):
     url = 'https://bestdori.com/api/post/list'
     header = {'content-type': 'application/json;charset=UTF-8'}
-    postData = {"following":False,"categoryName":"SELF_POST","categoryId":"chart","order":"TIME_DESC","limit":20,"offset":0}
+    if model == 1:
+        postData = {"following":False,"categoryName":"SELF_POST","categoryId":"chart","order":"TIME_DESC","limit":20,"offset":0}
+    else:
+        postData = {"search":str(key),"following":False,"categoryName":"SELF_POST","categoryId":"chart","tags":[],"order":"TIME_DESC","limit":20,"offset":0}
     jsonStr = requests.post(url,data=json.dumps(postData),headers = header).json()
     if jsonStr['result'] != True:
         print('requests lose')
         return 'error'
-    return jsonStr['posts']
+    if model == 1:
+        return jsonStr['posts']
+    else:
+        return jsonStr
 
 # 查新
 async def new(songs):
@@ -55,7 +62,7 @@ async def new(songs):
     return 'empty'
 
 # 定向详细info
-async def serch(id):
+async def search(id):
     # 查缓存
     jsonPath = 'bangbang_data/' + str(id) + '.json'
     if os.path.exists(jsonPath):
@@ -163,3 +170,21 @@ async def base(id):
                 )
     return songInfo
 
+# 搜名称
+async def searchName(key):
+    jsonStr = await get(2,str(key))
+    if jsonStr['count'] == 0:
+        return '没有找到相关谱面喵(๑*д*๑)~'
+    posts = jsonStr['posts']
+    count = 1
+    songInfo = '康康这是您要找的 P 嘛(=￣ω￣=)~\n'
+    for song in posts:
+        if count > 10:
+            songInfo += '显示不下啦，当前共有' + str(jsonStr['count']) + '张谱哦'
+            break
+        songInfo += (str(count) + '.' + song['title'] + 
+                    '<' + str(song['id']) + '>\n' + 
+                    'Level ' + str(song['level']) + ' @' +
+                    str(song['author']['username']) + '\n' )
+        count += 1
+    return songInfo[:-1]
