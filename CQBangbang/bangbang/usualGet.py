@@ -100,8 +100,7 @@ async def search(id):
         else:
             # 下载
             imageCover = requests.get(post['song']['cover'], stream=True)
-            async with aiofiles.open(imagePath, 'wb') as f:
-                await write(imageCover.content)
+            open(imagePath, 'wb').write(imageCover.content)
             songInfo += '[CQ:image,file=bestdori_'+ str(id) + '.jpg]'
     except:
         songInfo += '封面获取失败\n'
