@@ -146,8 +146,13 @@ async def mapGet(id,bot,qun):
                                 posA[3]*lineDistance+margin-xSEO,int(lineLength+margin-noteLength*posA[2]+halfLang),
                                 (posA[3]-1)*lineDistance+margin+xSEO,int(lineLength+margin-noteLength*posA[2]+halfLang)],fill=color,)
                                 posLockA = 0
-                                background.paste(iconLang,(margin+(int(note['lane'])-1)*lineDistance,
-                                int(lineLength+margin-noteLength*note['beat'])),iconLang)
+                                try:
+                                    if note['flick'] == True:
+                                        background.paste(iconJump,(margin+(int(note['lane'])-1)*lineDistance,
+                                        int(lineLength+margin-noteLength*note['beat'])),iconJump)
+                                except:
+                                    background.paste(iconLang,(margin+(int(note['lane'])-1)*lineDistance,
+                                    int(lineLength+margin-noteLength*note['beat'])),iconLang)
                                 # 重画
                                 if startMarkA == 1:
                                     background.paste(iconLang,(margin+(int(backA[1])-1)*lineDistance,
@@ -196,8 +201,13 @@ async def mapGet(id,bot,qun):
                                 posB[3]*lineDistance+margin-xSEO,int(lineLength+margin-noteLength*posB[2]+halfLang),
                                 (posB[3]-1)*lineDistance+margin+xSEO,int(lineLength+margin-noteLength*posB[2]+halfLang)],fill=color,)
                                 posLockB = 0
-                                background.paste(iconLang,(margin+(int(note['lane'])-1)*lineDistance,
-                                int(lineLength+margin-noteLength*note['beat'])),iconLang)
+                                try:
+                                    if note['flick'] == True:
+                                        background.paste(iconJump,(margin+(int(note['lane'])-1)*lineDistance,
+                                        int(lineLength+margin-noteLength*note['beat'])),iconJump)
+                                except:
+                                    background.paste(iconLang,(margin+(int(note['lane'])-1)*lineDistance,
+                                    int(lineLength+margin-noteLength*note['beat'])),iconLang)
                                 # 重画
                                 if startMarkB == 1:
                                     background.paste(iconLang,(margin+(int(backB[1])-1)*lineDistance,
