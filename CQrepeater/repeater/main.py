@@ -12,7 +12,8 @@ async def re(qun,msg):
     else:
         if os.path.exists(p):
             async with aiofiles.open(p,"r",encoding="utf-8") as f:
-                msg_old = await f.read().strip()
+                msg_old = await f.read()
+                msg_old = msg_old.strip()
             if msg_old == msg:
                 mark=1
                 async with aiofiles.open(p, "w", encoding="utf-8") as f:

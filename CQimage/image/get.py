@@ -5,7 +5,7 @@ import aiofiles
 
 async def getIni(name,item):
     img = "image_data/"+str(name)+"/config.ini"
-    async with aiofiles.aiofiles.open(img,"r",encoding="utf-8") as f:
+    async with aiofiles.open(img,"r",encoding="utf-8") as f:
         ini = await f.read()
     dic =  json.loads(ini)
     return dic[item]
@@ -14,8 +14,9 @@ async def getQqName(qq):
     p = "image_data/qqdata/"+str(qq)+".ini"
     mark = "initial"
     if os.path.exists(p):
-        async with aiofiles.aiofiles.open(p,"r",encoding="utf-8") as f:
-            mark = await f.read().strip()
+        async with aiofiles.open(p,"r",encoding="utf-8") as f:
+            mark = await f.read()
+            mark = mark.strip()
     return mark
 
 async def setQqName(qq,msg):

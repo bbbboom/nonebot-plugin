@@ -13,7 +13,8 @@ async def t_w():
     sub = 0
     if os.path.exists(p):
         async with aiofiles.open(p,"r") as f:
-            read = await f.read().strip()
+            read = await f.read()
+            read = read.strip()
             sub = s - float(read)
             print(sub)
     else:
