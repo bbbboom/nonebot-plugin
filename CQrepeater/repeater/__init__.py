@@ -3,6 +3,7 @@ from nonebot import *
 from aiocqhttp.exceptions import Error as CQHttpError
 import main
 import time,os,random
+import aiofiles
 
 bot = get_bot()
 
@@ -11,16 +12,16 @@ async def t_w():
     s = time.time()
     sub = 0
     if os.path.exists(p):
-        with open(p,"r") as f:
-            read = f.read().strip()
+        async with aiofiles.open(p,"r") as f:
+            read = await f.read().strip()
             sub = s - float(read)
             print(sub)
     else:
-        with open(p,"w") as f:
-            f.write(str(s))
+        async with aiofiles.open(p,"w") as f:
+            await f.write(str(s))
     if sub>60:
-        with open(p,"w") as f:
-            f.write(str(s))
+        async with aiofiles.open(p,"w") as f:
+            await f.write(str(s))
         return 1
     else:
         return 0
@@ -29,8 +30,8 @@ async def gjc_on(qun):
     p = "repeater_data/gjc_no.txt"
     mark = 1
     if os.path.exists(p):
-        with open(p,"r") as f:
-            lines = f.readlines()
+        async with aiofiles.open(p,"r") as f:
+            lines = await f.readlines()
             for line in lines:
                 line = line.strip()
                 if line == str(qun):
@@ -52,8 +53,8 @@ async def re(context):
     #关键词部分
     if await gjc_on(qun):
         if os.path.exists("repeater_data/gjc.txt"):
-            with open("repeater_data/gjc.txt","r") as f:
-                lines = f.readlines()
+            async with aiofiles.open("repeater_data/gjc.txt","r") as f:
+                lines = await f.readlines()
                 for line in lines:
                     line = line.strip().split(" ")
                     gjc = line[0]

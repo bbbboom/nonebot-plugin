@@ -1,11 +1,12 @@
 # -*- coding:utf-8 -*-
 
 import os,json
+import aiofiles
 
 async def getIni(name,item):
     img = "image_data/"+str(name)+"/config.ini"
-    with open(img,"r",encoding="utf-8") as f:
-        ini = f.read()
+    async with aiofiles.aiofiles.open(img,"r",encoding="utf-8") as f:
+        ini = await f.read()
     dic =  json.loads(ini)
     return dic[item]
 
@@ -13,8 +14,8 @@ async def getQqName(qq):
     p = "image_data/qqdata/"+str(qq)+".ini"
     mark = "initial"
     if os.path.exists(p):
-        with open(p,"r",encoding="utf-8") as f:
-            mark =f.read().strip()
+        async with aiofiles.aiofiles.open(p,"r",encoding="utf-8") as f:
+            mark = await f.read().strip()
     return mark
 
 async def setQqName(qq,msg):
@@ -27,15 +28,15 @@ async def setQqName(qq,msg):
         p="image_data/qqdata/"+str(qq)+".ini"
         name = "image_data/bieming/name.ini"
         if os.path.exists(name):
-            with open(name,"r",encoding="gbk") as f:
-                line = f.readlines()
+            async with aiofiles.open(name,"r",encoding="gbk") as f:
+                line = await f.readlines()
                 for i in line:
                     i = i.strip()
                     line_list=i.split(" ")
                     if line_list[0]==msg:
                         mark = line_list[1]
                         item=1
-                        with open(p,"w",encoding="utf-8") as f:
-                            f.write(str(mark))
+                        async with aiofiles.open(p,"w",encoding="utf-8") as f:
+                            await f.write(str(mark))
     return item
 

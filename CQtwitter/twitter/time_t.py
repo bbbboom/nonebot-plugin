@@ -3,13 +3,14 @@ from . import twitter
 import requests
 import os
 from bs4 import BeautifulSoup
+import aiofiles
 ####################
 
 async def list(bot):
     p = "twitterConfig/user.txt"
     if os.path.exists(p):
-        with open(p,"r") as f:
-            lines = f.readlines()
+        async with aiofiles.open(p,"r") as f:
+            lines = await f.readlines()
             for line in lines:
                 user = line.strip().split(" ")
                 url = "https://twitter.com/"+str(user[0])
@@ -31,16 +32,16 @@ async def main(nick,x,y,url,name,bot):
                 t=''
                 p = 'twitterConfig/new_time_'+str(nick)+'.txt'
                 if not os.path.exists(p):
-                    with open(p,'w') as f:
-                        f.write(sj)
+                    async with aiofiles.open(p,'w') as f:
+                        await f.write(sj)
                 else:
-                    with open(p, 'r') as f1:
-                        t=f1.read()
+                    async with aiofiles.open(p, 'r') as f1:
+                        t = await f1.read()
                     t=t.strip()
                     sj=sj.strip()
                     if t!=sj:
                         #存时间
-                        with open(p,'w') as f2:
-                            f2.write(sj)
+                        async with aiofiles.open(p,'w') as f2:
+                            await f2.write(sj)
                         #发推
                         await twitter.twitter(x,y,url,name,bot)

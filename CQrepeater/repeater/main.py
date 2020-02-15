@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import os
+import aiofiles
 
 async def re(qun,msg):
     mark = 0
@@ -10,13 +11,13 @@ async def re(qun,msg):
         return 0
     else:
         if os.path.exists(p):
-            with open(p,"r",encoding="utf-8") as f:
-                msg_old = f.read().strip()
+            async with aiofiles.open(p,"r",encoding="utf-8") as f:
+                msg_old = await f.read().strip()
             if msg_old == msg:
                 mark=1
-                with open(p, "w", encoding="utf-8") as f:
-                    f.write("")
+                async with aiofiles.open(p, "w", encoding="utf-8") as f:
+                    await f.write("")
         if mark==0:
-            with open(p,"w",encoding="utf-8") as f:
-                    f.write(msg)
+            async with aiofiles.open(p,"w",encoding="utf-8") as f:
+                    await f.write(msg)
         return mark
