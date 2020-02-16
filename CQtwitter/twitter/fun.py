@@ -8,7 +8,7 @@ async def qunfa(name,bot,str):
         return
     else:
         async with aiofiles.open('twitterConfig/qun.txt', 'r') as n:
-            lines = await n.readlines():
+            lines = await n.readlines()
             for line in lines:
                 line = line.strip()
                 line = line.split(" ")
