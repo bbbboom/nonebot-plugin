@@ -18,9 +18,9 @@ async def getNew(bot):
                 qun = int(line.strip())
                 await bot.send_msg(group_id=int(qun),message=str(new))
 
-# 按名字查找
-async def searchKey(bot,qun,key):
-    songInfo = await usualGet.searchName(str(key))
+# 组合查找
+async def searchKey(bot,qun,screenNameList):
+    songInfo = await usualGet.searchName(screenNameList)
     await bot.send_msg(group_id=int(qun),message=str(songInfo))
 
 # 详细信息查询

@@ -23,21 +23,21 @@ async def reasonable(msg,keyList,model = 'id'):
                 except:
                     pass
         # model = 'searchName' 模式
-        else:
+        elif model == 'searchName':
             try:
                 command = msg.split(' ')[0]
-                name = msg.split(' ')[1]
+                nameList = msg[msg.find(' ') + 1:].split(' ')
+                screenNameList = [[],[]]
+                for name in nameList:
+                    if name.find('#') != -1:
+                        screenNameList[1].append(name[1:])
+                    else:
+                        screenNameList[0].append(name)
                 # ' ' 模式
                 if command == key:
                     response[0] = 1
-                    response[1] = str(name)
+                    response[1] = screenNameList
             except:
-                try:
-                    # '.' 模式
-                    if msg.find('.' + str(key)) != -1:
-                        response[0] = 1
-                        response[1] = msg[1 + len(key):]
-                except:
-                    pass
+                pass
     return response
         

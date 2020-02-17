@@ -7,14 +7,28 @@ import aiofiles
 from . import utils
 
 # get新谱列表
-# model = 1 -> get new list | model = 2 -> get key list
-async def get(model,key = ''):
+# model = 1 -> get new list | model = 2 -> get key list | model = 3 -> get tag list
+async def get(model,key = '',searchTag = []):
     url = 'https://bestdori.com/api/post/list'
     header = {'content-type': 'application/json;charset=UTF-8'}
     if model == 1:
         postData = {"following":False,"categoryName":"SELF_POST","categoryId":"chart","order":"TIME_DESC","limit":20,"offset":0}
-    else:
+    # 只有key，无tag
+    elif model == 2:
         postData = {"search":str(key),"following":False,"categoryName":"SELF_POST","categoryId":"chart","tags":[],"order":"TIME_DESC","limit":20,"offset":0}
+    # 只有tag，无key
+    elif model == 3:
+        tags = []
+        for i in searchTag:
+            tag = {"type":"text","data":str(i)}
+            tags.append(tag)
+        postData = {"following":False,"categoryName":"SELF_POST","categoryId":"chart","tags":tags,"order":"TIME_DESC","limit":20,"offset":0}
+    else:
+        tags = []
+        for i in searchTag:
+            tag = {"type":"text","data":str(i)}
+            tags.append(tag)
+        postData = {"search":str(key),"following":False,"categoryName":"SELF_POST","categoryId":"chart","tags":tags,"order":"TIME_DESC","limit":20,"offset":0}
     jsonStr = requests.post(url,data=ujson.dumps(postData),headers = header,timeout = 5).json()
     if jsonStr['result'] != True:
         print('requests lose')
@@ -185,8 +199,21 @@ async def base(id):
     return songInfo
 
 # 搜名称
-async def searchName(key):
-    jsonStr = await get(2,str(key))
+async def searchName(screenNameList):
+    if screenNameList[1] == [] and screenNameList[0] != []:
+        key = ''
+        for i in screenNameList[0]:
+            key += str(i) + ' '
+        key = key[:-1]
+        jsonStr = await get(2,key)
+    elif screenNameList[0] == [] and screenNameList[1] != []:
+        jsonStr = await get(3,searchTag = screenNameList[1])
+    else:
+        key = ''
+        for i in screenNameList[0]:
+            key += str(i) + ' '
+        key = key[:-1]
+        jsonStr = await get(4,key,screenNameList[1])
     if jsonStr['count'] == 0:
         return '没有找到相关谱面喵(๑*д*๑)~'
     posts = jsonStr['posts']
