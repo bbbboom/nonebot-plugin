@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*- 
 import os
-import requests
+# import requests
+import aiohttp
 import ujson
 from PIL import Image
 from PIL import ImageDraw
@@ -28,12 +29,14 @@ async def mapGet(id,bot,qun):
     else:
         # Get谱面
         try:
-            jsonStr = requests.get('https://bestdori.com/api/post/details?id=' + str(id)).json()
-            if jsonStr['result']!=True:
-                print('get失败')
-                return
-            async with aiofiles.open(savePath,'w') as f:
-                await f.write(ujson.dumps(jsonStr))
+            async with aiohttp.ClientSession() as session:
+                async with session.get('https://bestdori.com/api/post/details?id=' + str(id)) as res:
+                    jsonStr = await res.json()
+                    if jsonStr['result']!=True:
+                        print('get失败')
+                        return
+                    async with aiofiles.open(savePath,'w') as f:
+                        await f.write(ujson.dumps(jsonStr))
         except:
             return
     # 读缓存

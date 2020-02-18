@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*- 
 import os
-import requests
+# import requests
+import aiohttp
 import time
 from PIL import Image
 from PIL import ImageDraw
@@ -31,8 +32,15 @@ async def info(status,title = '',artists = '',cover = '',level = '',timestamp = 
         else:
             s = str(s)[0:2]
         songTime = str(int(m)) + ':' + str(s)
-        imageCover = requests.get(cover, stream=True)
-        open(coverPath, 'wb').write(imageCover.content)
+        # image download
+        async with aiohttp.ClientSession() as session:
+            async with session.get(cover) as res:
+                with open(coverPath, 'wb') as f:
+                    while 1:
+                        chunk = await res.content.read(1024)    #每次获取1024字节
+                        if not chunk:
+                            break
+                        f.write(chunk)
         background = Image.open(p+"static/bk.png").resize((width,height))
         image = Image.open(coverPath).convert('RGBA').resize((int(width-2*borderDistance),int(width-2*borderDistance)))
         background.paste(image,(borderDistance,borderDistance),image)

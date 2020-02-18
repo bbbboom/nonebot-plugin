@@ -1,7 +1,6 @@
 # -*- coding: UTF-8 -*-
 from nonebot import *
 from . import time_t
-from nonebot.permission import *
 from aiocqhttp.exceptions import Error as CQHttpError
 
 bot = get_bot()

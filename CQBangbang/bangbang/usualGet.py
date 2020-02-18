@@ -1,10 +1,11 @@
 # -*- coding:utf-8 -*- 
 import os
-import requests
 import ujson
 import time
 import aiofiles
 from . import utils
+import aiohttp
+# import requests
 
 # get新谱列表
 # model = 1 -> get new list | model = 2 -> get key list | model = 3 -> get tag list
@@ -29,14 +30,19 @@ async def get(model,key = '',searchTag = []):
             tag = {"type":"text","data":str(i)}
             tags.append(tag)
         postData = {"search":str(key),"following":False,"categoryName":"SELF_POST","categoryId":"chart","tags":tags,"order":"TIME_DESC","limit":20,"offset":0}
-    jsonStr = requests.post(url,data=ujson.dumps(postData),headers = header,timeout = 5).json()
-    if jsonStr['result'] != True:
-        print('requests lose')
-        return 'error'
-    if model == 1:
-        return jsonStr['posts']
-    else:
-        return jsonStr
+    # 异步 request
+    async with aiohttp.ClientSession() as session:
+        async with session.post(url,data=ujson.dumps(postData),headers = header,timeout = 5) as res:
+            jsonStr = await res.json()
+    # 同步 request
+    # jsonStr = requests.post(url,data=ujson.dumps(postData),headers = header,timeout = 5).json()
+            if jsonStr['result'] != True:
+                print('requests lose')
+                return 'error'
+            if model == 1:
+                return jsonStr['posts']
+            else:
+                return jsonStr
 
 # 查新
 async def new(songs):
@@ -93,13 +99,15 @@ async def search(id):
     else:
         # get
         try:
-            jsonStr = requests.get('https://bestdori.com/api/post/details?id=' + str(id)).json()
-            if jsonStr['result']!=True:
-                print('serch:get失败')
-                return 0
-            # 写缓存
-            async with aiofiles.open(jsonPath,'w') as f:
-                await f.write(ujson.dumps(jsonStr))
+            async with aiohttp.ClientSession() as session:
+                async with session.get('https://bestdori.com/api/post/details?id=' + str(id)) as res:
+                    jsonStr = await res.json()
+                    if jsonStr['result']!=True:
+                        print('serch:get失败')
+                        return 0
+                    # 写缓存
+                    async with aiofiles.open(jsonPath,'w') as f:
+                        await f.write(ujson.dumps(jsonStr))
         except:
             return 
     # 读缓存
@@ -120,9 +128,15 @@ async def search(id):
             songInfo += '[CQ:image,file=bestdori_'+ str(id) + '.jpg]'
         else:
             # 下载
-            imageCover = requests.get(post['song']['cover'], stream=True)
-            open(imagePath, 'wb').write(imageCover.content)
-            songInfo += '[CQ:image,file=bestdori_'+ str(id) + '.jpg]'
+            async with aiohttp.ClientSession() as session:
+                async with session.get(post['song']['cover']) as res:
+                    with open(imagePath, 'wb') as f:
+                        while 1:
+                            chunk = await res.content.read(1024)    #每次获取1024字节
+                            if not chunk:
+                                break
+                            f.write(chunk)
+                    songInfo += '[CQ:image,file=bestdori_'+ str(id) + '.jpg]'
     except:
         songInfo += '封面获取失败\n'
     # 时间格式化
@@ -163,13 +177,15 @@ async def base(id):
     else:
         # get
         try:
-            jsonStr = requests.get('https://bestdori.com/api/post/details?id=' + str(id)).json()
-            if jsonStr['result']!=True:
-                print('serch:get失败')
-                return 0
-            # 写缓存
-            async with aiofiles.open(jsonPath,'w') as f:
-                await f.write(ujson.dumps(jsonStr))
+            async with aiohttp.ClientSession() as session:
+                async with session.get('https://bestdori.com/api/post/details?id=' + str(id)) as res:
+                    jsonStr = await res.json()
+                    if jsonStr['result']!=True:
+                        print('serch:get失败')
+                        return 0
+                    # 写缓存
+                    async with aiofiles.open(jsonPath,'w') as f:
+                        await f.write(ujson.dumps(jsonStr))
         except:
             return 
     # 读缓存

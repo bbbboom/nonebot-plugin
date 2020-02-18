@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-
+# 不用同步会报ssl错误
 import requests,os
 from . import fanyi
 from . import fun
@@ -38,7 +38,7 @@ async def twitter(x,y,url,name,bot):
                 tw_=soup.find_all('div', class_='context',limit=x)[y].get_text()
                 #推文
                 tw = soup.find_all('div', class_='content',limit=x)[y].find('p',class_='TweetTextSize TweetTextSize--normal js-tweet-text tweet-text').get_text()
-                tw = tw.replace(' …','')
+                tw = tw.replace(' …','')
             #原文链接获取
                 wei=''
                 if tw.find('pic.twitter.com')!=-1:
@@ -77,5 +77,3 @@ async def twitter(x,y,url,name,bot):
                     end2 += wei
                     #第2波文
                     await fun.qunfa(name,bot,end2)
-
-

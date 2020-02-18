@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 from . import twitter
+# 不用同步会报ssl错误
 import requests
 import os
 from bs4 import BeautifulSoup
