@@ -24,7 +24,7 @@ async def setQqName(qq,msg):
     msg=str(msg)
     msg_list = msg.split(" ")
     if msg_list[0]=="img":
-        mark = str(getQqName(qq))
+        mark = str(await getQqName(qq))
         msg = msg_list[1]
         p="image_data/qqdata/"+str(qq)+".ini"
         name = "image_data/bieming/name.ini"
