@@ -11,14 +11,14 @@ async def re(qun,msg):
         return 0
     else:
         if os.path.exists(p):
-            async with aiofiles.open(p,"r",encoding = 'gbk') as f:
+            async with aiofiles.open(p,"r") as f:
                 msg_old = await f.read()
                 msg_old = msg_old.strip()
             if msg_old == msg:
                 mark=1
-                async with aiofiles.open(p, "w", encoding = 'gbk') as f:
+                async with aiofiles.open(p, "w") as f:
                     await f.write("")
         if mark==0:
-            async with aiofiles.open(p,"w", encoding = 'gbk') as f:
+            async with aiofiles.open(p,"w") as f:
                     await f.write(msg)
         return mark
