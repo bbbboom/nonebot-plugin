@@ -1,0 +1,176 @@
+{
+    "eventlist": [
+        {
+            "id": 1,
+            "event": "误入传销窝点",
+            "goldmax": 30,
+            "goldmin": 10,
+            "type": "loss"
+        },
+        {
+            "id": 2,
+            "event": "扶老太太过马路",
+            "goldmax": 106,
+            "goldmin": 72
+        },
+        {
+            "id": 3,
+            "event": "在便利店捡垃圾",
+            "foodmax": 26,
+            "foodmin": 6
+        },
+        {
+            "id": 4,
+            "event": "直播挑战",
+            "goldmax": 106,
+            "goldmin": 72
+        },
+        {
+            "id": 5,
+            "event": "扮演充气包被殴打",
+            "goldmax": 30,
+            "goldmin": 10,
+            "type": "loss"
+        },
+        {
+            "id": 6,
+            "event": "探索山洞",
+            "goldmax": 106,
+            "goldmin": 72
+        },
+        {
+            "id": 7,
+            "event": "野兽材料交易",
+            "foodmax": 26,
+            "foodmin": 6
+        },
+        {
+            "id": 8,
+            "event": "用德国工艺制作高级大师球",
+            "goodsid": 2,
+            "amount": 1,
+            "goodsid_fail": 1
+        },
+        {
+            "id": 9,
+            "event": "和流浪狗抢包子",
+            "foodmax": 26,
+            "foodmin": 6
+        },
+        {
+            "id": 10,
+            "event": "当众贩剑",
+            "foodmax": 26,
+            "foodmin": 6
+        },
+        {
+            "id": 11,
+            "event": "行窃被捕",
+            "goldmax": 30,
+            "goldmin": 10,
+            "type": "loss"
+        },
+        {
+            "id": 12,
+            "event": "向小山包的猫神许愿",
+            "goodsid": 4,
+            "amount": 1
+        },
+        {
+            "id": 13,
+            "event": "当众制杖",
+            "goldmax": 30,
+            "goldmin": 10,
+            "type": "loss"
+        },
+        {
+            "id": 14,
+            "event": "做白学家被打",
+            "goldmax": 30,
+            "goldmin": 10,
+            "type": "loss"
+        },
+        {
+            "id": 15,
+            "event": "被老人讹",
+            "goldmax": 30,
+            "goldmin": 10,
+            "type": "loss"
+        },
+        {
+            "id": 16,
+            "event": "卖茶叶",
+            "goodsid": 12,
+            "amount": 1
+        },
+        {
+            "id": 17,
+            "event": "行窃",
+            "goldmax": 106,
+            "goldmin": 72
+        },
+        {
+            "id": 18,
+            "event": "打赏B站主播",
+            "goldmax": 30,
+            "goldmin": 10,
+            "type": "loss"
+        },
+        {
+            "id": 19,
+            "event": "创业被收购",
+            "goldmax": 106,
+            "goldmin": 72
+        },
+        {
+            "id": 20,
+            "event": "打猎",
+            "goldmax": 106,
+            "goldmin": 72
+        },
+        {
+            "id": 21,
+            "event": "搬砖",
+            "goldmax": 106,
+            "goldmin": 72
+        },
+        {
+            "id": 22,
+            "event": "被神秘人殴打",
+            "goldmax": 30,
+            "goldmin": 10,
+            "type": "loss"
+        },
+        {
+            "id": 23,
+            "event": "在海底捞打工被殴打",
+            "goldmax": 30,
+            "goldmin": 10,
+            "type": "loss"
+        },
+        {
+            "id": 24,
+            "event": "偶遇渣渣辉",
+            "goodsid": 3,
+            "amount": 1
+        },
+        {
+            "id": 25,
+            "event": "森林探险",
+            "goldmax": 106,
+            "goldmin": 72
+        },
+        {
+            "id": 26,
+            "event": "卖小黄书",
+            "goldmax": 106,
+            "goldmin": 72
+        },
+        {
+            "id": 27,
+            "event": "变卖不锈钢盆",
+            "goldmax": 106,
+            "goldmin": 72
+        }
+    ]
+}

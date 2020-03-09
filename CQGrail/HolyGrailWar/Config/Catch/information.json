@@ -1,0 +1,36 @@
+{
+    "catchlist": [
+        {
+            "id": 1,
+            "msg": "{master}向{follow}扔出了一杯昏睡红茶，{follow}喝了之后陷入了昏迷，成为了{master}的随从。",
+            "goodsid": 12
+        },
+        {
+            "id": 2,
+            "msg": "{master}向{follow}扔出了大师球，把{follow}砸了个头破血流，{follow}不但没有逃跑，反而有一丝快感，乖乖成为了{master}的随从。",
+            "goodsid": 1
+        },
+        {
+            "id": 3,
+            "msg": "{master}向{follow}扔出了大师球，{follow}竟然毫无反抗，温顺地成为了{master}的随从。",
+            "goodsid": 2
+        }
+    ],
+    "notcatch": [
+        {
+            "id": 1,
+            "msg": "捕捉失败了。",
+            "goodsid": 0
+        },
+        {
+            "id": 2,
+            "msg": "{master}向{follow}扔出了大师球，{follow}以为是食物，把大师球吃掉了。",
+            "goodsid": 1
+        },
+        {
+            "id": 3,
+            "msg": "{master}向{follow}扔出了一杯昏睡红茶，{follow}喝了之后啥事没有，压力马斯内。",
+            "goodsid": 12
+        }
+    ]
+}

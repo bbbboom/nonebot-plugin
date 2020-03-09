@@ -29,7 +29,7 @@ async def setQqName(qq,msg):
         p="image_data/qqdata/"+str(qq)+".ini"
         name = "image_data/bieming/name.ini"
         if os.path.exists(name):
-            async with aiofiles.open(name,"r",encoding="gbk") as f:
+            async with aiofiles.open(name,"r",encoding = 'utf-8') as f:
                 line = await f.readlines()
                 for i in line:
                     i = i.strip()

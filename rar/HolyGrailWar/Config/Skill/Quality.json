@@ -1,0 +1,39 @@
+{
+    "qualitylist": [
+        {
+            "id": 1,
+            "name": "N",
+            "additional_maximum_combat_power": 5,
+            "lower_limit_of_additional_combat_power": 1,
+            "range": [0, 50]
+        },
+        {
+            "id": 2,
+            "name": "R",
+            "additional_maximum_combat_power": 8,
+            "lower_limit_of_additional_combat_power": 3,
+            "range": [51, 75]
+        },
+        {
+            "id": 3,
+            "name": "SR",
+            "additional_maximum_combat_power": 11,
+            "lower_limit_of_additional_combat_power": 6,
+            "range": [76, 88]
+        },
+        {
+            "id": 4,
+            "name": "SSR",
+            "additional_maximum_combat_power": 14,
+            "lower_limit_of_additional_combat_power": 9,
+            "range": [89, 95]
+        },
+        {
+            "id": 5,
+            "name": "UR",
+            "additional_maximum_combat_power": 17,
+            "lower_limit_of_additional_combat_power": 12,
+            "range": [96, 100]
+        }
+    ]
+}

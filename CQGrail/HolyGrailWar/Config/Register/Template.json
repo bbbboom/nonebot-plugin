@@ -1,0 +1,35 @@
+{
+    "qq": 100,
+    "code_name": "U-000",
+    "title": "",
+    "register": {
+        "registration_group_number": 200,
+        "registration_time": "2017-10-01",
+        "registered_nickname": "nickname",
+        "register_group_business_card": "card"
+    },
+    "resources": {
+        "gold": 1000,
+        "foodstuff": 1000
+    },
+    "game": {
+        "last_game_time": "2017-10-01",
+        "last_game_time_group": 200,
+        "times_of_play": 1
+    },
+    "battle": {
+        "combat_effectiveness": 0,
+        "frequency": 0,
+        "victory": 0,
+        "fail": 0,
+        "number_of_battles_of_the_day": 0,
+        "last_battle_time": "2017-10-01"
+    },
+    "knapsack": [
+    ],
+    "entourage": {
+        "number": 0,
+        "follower_information": [
+        ]
+    }
+}

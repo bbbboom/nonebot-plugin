@@ -1,0 +1,144 @@
+{
+    "goodslist": [
+        {
+            "id": 1,
+            "name": "大师球",
+            "abbreviation": ["球"],
+			"eject": ["高级"],
+            "price": 300,
+            "introduce": "常见用于捕捉随从的大师球",
+            "sale": 150
+        },
+        {
+            "id": 2,
+            "name": "高级大师球",
+            "abbreviation": ["高级","高级球"],
+            "price": 800,
+            "introduce": "可增加捕捉成功率和初始资质的大师球",
+            "sale": 400
+        },
+        {
+            "id": 3,
+            "name": "屠龙宝刀",
+            "abbreviation": ["屠龙","刀"],
+            "price": 1500,
+            "introduce": "屠龙宝刀点击就送，是兄弟就来砍我",
+            "sale": 750,
+            "upper_limit_of_war_power": 60,
+            "lower_limit_of_combat_power": 48
+        },
+        {
+            "id": 4,
+            "name": "エロ抱枕",
+            "abbreviation": ["工口","工口抱枕","抱枕"],
+            "price": 1200,
+            "introduce": "印着奇怪图案的抱枕",
+            "sale": 600,
+            "upper_limit_of_war_power": 40,
+            "lower_limit_of_combat_power": 24
+        },
+        {
+            "id": 6,
+            "name": "阿姆斯特朗回旋炮",
+            "abbreviation": ["阿姆","阿姆斯特朗","回旋炮","炮"],
+            "price": 2200,
+            "introduce": "阿姆斯特朗回旋加速喷气式阿姆斯特朗炮",
+            "sale": 1100,
+            "upper_limit_of_war_power": 100,
+            "lower_limit_of_combat_power": 72
+        },
+        {
+            "id": 7,
+            "name": "医用外科口罩",
+            "abbreviation":["口罩"],
+			"eject": ["N95"],
+            "price": 1000,
+            "introduce": "普通的医用口罩，可轻微抵抗病毒伤害",
+            "sale": 500
+        },
+        {
+            "id": 8,
+            "name": "N95口罩",
+            "abbreviation":["N95"],
+            "price": 3000,
+            "introduce": "N95标准的口罩，可有效防范病毒入侵",
+            "sale": 1500
+        },
+        {
+            "id": 9,
+            "name": "高级防毒面罩",
+            "abbreviation":["高级面罩","面罩","防毒面罩"],
+            "price": 4000,
+            "introduce": "一种比较高级的防毒面罩，可过滤大部分病毒伤害",
+            "sale": 2000
+        },
+        {
+            "id": 10,
+            "name": "冠状病毒抗体",
+            "abbreviation":["抗体","病毒抗体"],
+            "price": 9000,
+            "introduce": "新型冠状病毒抗体的生物制剂，可完全免疫伤害",
+            "sale": 4500
+        },
+        {
+            "id": 11,
+            "name": "战斗许可证",
+            "abbreviation":["许可证"],
+            "price": 340,
+            "introduce": "使用「攻击」命令时需要消耗的道具",
+            "sale": 170
+        },
+        {
+            "id": 12,
+            "name": "昏睡红茶",
+            "abbreviation":["红茶","茶"],
+            "introduce": "一种让人昏昏欲睡然后为所欲为的红茶",
+            "notsale": true,
+            "price": 1000,
+            "sale": 500,
+            "upper_limit_of_war_power": 100,
+            "lower_limit_of_combat_power": 24
+        },
+        {
+            "id": 13,
+            "name": "千年灵芝（未实装）",
+            "abbreviation":["灵芝"],
+            "introduce": "生长了千年的灵芝，可以用来煮老火汤",
+            "notsale": true,
+            "price": 1000,
+            "sale": 500
+        },
+        {
+            "id": 14,
+            "name": "还童草（未实装）",
+            "abbreviation":["草"],
+            "introduce": "可以重置随从天赋的草",
+            "notsale": true,
+            "price": 1000,
+            "sale": 500
+        },
+        {
+            "id": 15,
+            "name": "金疮药（未实装）",
+            "abbreviation":["药"],
+            "introduce": "可以重置随从天赋的草",
+            "notsale": true,
+            "price": 1000,
+            "sale": 500
+        },
+        {
+            "id": 16,
+            "name": "圣杯碎片",
+            "abbreviation":["圣杯","碎片"],
+            "introduce": "可以增加携带随从数量的神奇碎片",
+            "notsale": true,
+            "price": 1000,
+            "sale": 500
+        }
+    ],
+    "sale_plus": {
+        "max": 0.3,
+        "min": 0
+    },
+    "transaction_tax": 0.01
+}

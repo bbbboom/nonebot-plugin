@@ -1,0 +1,21 @@
+{
+    "master": 100,
+    "qq": 100,
+    "name": "name",
+    "arrest_time": {
+        "business_cards_in_capture": "cardname",
+        "nickname_for_capture": "qqnickname",
+        "arrest_time": "2017-10-01",
+        "catch_group": 200,
+        "capture_group_code": "G-1"
+    },
+    "combat_effectiveness":{
+        "total_combat_effectiveness": 0,
+        "initial_fighting_power": 0,
+        "basics": 0,
+        "skill": {},
+        "shared_combat_effectiveness": 0,
+        "share_number": 0,
+        "ranking": 0
+    }
+}

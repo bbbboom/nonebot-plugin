@@ -12,16 +12,16 @@ async def t_w():
     s = time.time()
     sub = 0
     if os.path.exists(p):
-        async with aiofiles.open(p,"r") as f:
+        async with aiofiles.open(p,"r",encoding = 'utf-8') as f:
             read = await f.read()
             read = read.strip()
             sub = s - float(read)
             print(sub)
     else:
-        async with aiofiles.open(p,"w") as f:
+        async with aiofiles.open(p,"w",encoding = 'utf-8') as f:
             await f.write(str(s))
     if sub>60:
-        async with aiofiles.open(p,"w") as f:
+        async with aiofiles.open(p,"w",encoding = 'utf-8') as f:
             await f.write(str(s))
         return 1
     else:
@@ -31,7 +31,7 @@ async def gjc_on(qun):
     p = "repeater_data/gjc_no.txt"
     mark = 1
     if os.path.exists(p):
-        async with aiofiles.open(p,"r") as f:
+        async with aiofiles.open(p,"r",encoding = 'utf-8') as f:
             lines = await f.readlines()
             for line in lines:
                 line = line.strip()
@@ -54,7 +54,7 @@ async def re(context):
     #关键词部分
     if await gjc_on(qun):
         if os.path.exists("repeater_data/gjc.txt"):
-            async with aiofiles.open("repeater_data/gjc.txt","r") as f:
+            async with aiofiles.open("repeater_data/gjc.txt","r",encoding = 'utf-8') as f:
                 lines = await f.readlines()
                 for line in lines:
                     line = line.strip().split(" ")
