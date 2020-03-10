@@ -211,7 +211,7 @@ async def identifyWhetherItIsACaptureCommand(bot, userQQ, userGroup, msg, rawMsg
         # Extract at people
         botQQ = await bot.get_login_info()
         followQQ = await extractAtPeople(botQQ['user_id'], msg)
-        if followQQ == error:
+        if followQQ == error or followQQ == userQQ:
             return error
         # Pull up distribution function
         await distributionMessage.captureFunctionDistribution(bot, userQQ, followQQ, userGroup)
