@@ -393,11 +393,11 @@ async def constructWinningMessageSegment(userQQ, targetQQ, id, model = 'one_clic
             '（+' + str(settlementResult[0]) + '粮食，+' + 
             str(settlementResult[1]) + '金币）\n' + 
             '   - 战斗次数:' + str(combatRecordResults[0]) + '\n' +
-            '    - 胜率：' + str(100 * combatRecordResults[1]) + '%\n\n' + 
+            '    - 胜率：' + str( round(100 * combatRecordResults[1], 1) ) + '%\n\n' + 
             '【失败】' + await getGroupBusinessCardWhenUsersRegister(loserQQ) + 
             '（-' + str(settlementResult[2]) + '金币）\n' + 
             '   - 战斗次数:' + str(combatRecordResults[3]) + '\n' +
-            '    - 胜率：' + str(100 * combatRecordResults[4]) + '%\n\n' + 
+            '    - 胜率：' + str( round(100 * combatRecordResults[4], 1) ) + '%\n\n' + 
             '当天已用战斗次数(' + 
             str(combatRecordResults[2]) + '/10)')
     # Combat record of the day
