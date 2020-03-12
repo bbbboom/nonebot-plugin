@@ -167,7 +167,7 @@ async def knapsackFunction(bot, userQQ, userGroup, msg):
         await distributionMessage.backpackFunctionDistribution(bot, userQQ, userGroup)
     elif await exactMatchCommand(backpackHelpCommandList, msg) == 1:
         # Pull up the distribution
-        await distributionMessage.backpackFunctionDistribution(bot, userQQ, userGroup)
+        await distributionMessage.storeHelpDistribution(bot, userQQ, userGroup)
 
 
 async def adventureFunction(bot, userQQ, userGroup, msg):
