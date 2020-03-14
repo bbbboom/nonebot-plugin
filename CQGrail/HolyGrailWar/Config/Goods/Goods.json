@@ -83,7 +83,7 @@
         {
             "id": 11,
             "name": "战斗许可证",
-            "abbreviation":["许可证"],
+            "abbreviation":["许可证","战斗"],
             "price": 340,
             "introduce": "使用「攻击」命令时需要消耗的道具",
             "sale": 170
@@ -134,7 +134,16 @@
             "notsale": true,
             "price": 1000,
             "sale": 500
-        }
+        },
+		{
+			"id": 17,
+            "name": "蜜汁晓汉堡",
+            "abbreviation":["汉堡","老八"],
+            "introduce": "老八蜜汁晓汉堡，只有你想不到带，没有老八做不到带",
+            "notsale": true,
+            "price": 2000,
+            "sale": 1000
+		}
     ],
     "sale_plus": {
         "max": 0.3,
