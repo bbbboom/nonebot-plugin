@@ -45,7 +45,7 @@ async def calculateTheElapsedTimeCombination(lastTime):
     a = parse(lastTime)
     b = parse(timeNow)
     seconds = int((b - a).total_seconds())
-    return [int(seconds / 3600), int(seconds / 60), int(seconds % 60)]
+    return [int(seconds / 3600), int((seconds % 3600) / 60), int(seconds % 60)]
 
 async def getTheCurrentHour():
     return int(str(datetime.datetime.strftime(datetime.datetime.now(),'%H')))
@@ -67,11 +67,11 @@ async def groupRead(userGroup):
 
 async def groupWrite(userGroup, info):
     p = './GoodMorning/Data/Group/' + str(userGroup) + '.json'
-    await jsonWrite(userGroup, info)
+    await jsonWrite(p, info)
     return SUCCESS
 
 async def at(userQQ):
-    return '[CQ:at,qq=' + str(userQQ) + ']'
+    return '[CQ:at,qq=' + str(userQQ) + ']\n'
 
 async def readConfiguration(model):
     if model == MORNING_MODEL:
@@ -79,16 +79,19 @@ async def readConfiguration(model):
     if model == NIGHT_MODEL:
         return await jsonRead('./GoodMorning/Config/GoodNight.json')
 
-async def extractRandomWords(model):
-    return random.choice((await readConfiguration(model))['statement'])['content']
+async def extractRandomWords(model, sender):
+    name = sender['card']
+    if name == '':
+        name = sender['nickname']
+    return random.choice((await readConfiguration(model))['statement'])['content'].replace(r'{name}', name)
 
 async def extractConfigurationInformationAccordingToSpecifiedParameters(parameter, model):
     return (await readConfiguration(model))[parameter]
 
 async def replaceHourMinuteAndSecond(parameterList, msg):
-    return (msg.replace(r'{hour}', parameterList[0])
-                .replace(r'{minute}', parameterList[1])
-                .replace(r'{second}'), parameterList[2])
+    return (msg.replace(r'{hour}', str(parameterList[0]))
+                .replace(r'{minute}', str(parameterList[1]))
+                .replace(r'{second}', str(parameterList[2])))
 
 async def sendMsg(bot, userGroup, send):
     if send != '' and send != ERROR:

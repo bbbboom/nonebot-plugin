@@ -34,7 +34,7 @@ async def addToCheckInPoolAndGetRanking(userQQ, userGroup, model):
             await createACheckInPool(userGroup, model)
             content = await utils.groupRead(str(userGroup) + '-' + model)
         # Check if the pool has expired
-        if content['time'] != await utils.getAccurateTimeNow():
+        if content['time'] != await utils.getTheCurrentTime():
             # Expired, rebuild the pool
             await createACheckInPool(userGroup, model)
             content = await utils.groupRead(str(userGroup) + '-' + model)
@@ -54,7 +54,7 @@ async def addToCheckInPoolAndGetRanking(userQQ, userGroup, model):
         # Check if the pool has expired
         hourNow = await utils.getTheCurrentHour()
         expiryId = False
-        if content['time'] != await utils.getAccurateTimeNow():
+        if content['time'] != await utils.getTheCurrentTime():
             if await utils.judgeTimeDifference(content['accurateTime']) < 24:
                 if hourNow >= 12:
                     expiryId = True
@@ -71,7 +71,7 @@ async def addToCheckInPoolAndGetRanking(userQQ, userGroup, model):
         await utils.groupWrite(str(userGroup) + '-' + model, content)
         return content['number']
             
-async def goodMorningInformation(userQQ, userGroup):
+async def goodMorningInformation(userQQ, userGroup, sender):
     # Check if registered
     registered = await utils.userInformationReading(userQQ)
     send = await utils.at(userQQ)
@@ -80,7 +80,7 @@ async def goodMorningInformation(userQQ, userGroup):
         await userRegistration(userQQ, MORNING_MODEL)
         # Add to check-in pool and get ranking
         rank = await addToCheckInPoolAndGetRanking(userQQ, userGroup, MORNING_MODEL)
-        send += (await utils.extractRandomWords(MORNING_MODEL) + '\n'
+        send += (await utils.extractRandomWords(MORNING_MODEL, sender) + '\n' +
                 (await utils.extractConfigurationInformationAccordingToSpecifiedParameters('suffix',
                 MORNING_MODEL)).replace(r'{number}', str(rank)))
         return send
@@ -94,7 +94,7 @@ async def goodMorningInformation(userQQ, userGroup):
         if registered['time'] != await utils.getTheCurrentHour():
             await userRegistration(userQQ, MORNING_MODEL)
             rank = await addToCheckInPoolAndGetRanking(userQQ, userGroup, MORNING_MODEL)
-            send += (await utils.extractRandomWords(MORNING_MODEL) + '\n'
+            send += (await utils.extractRandomWords(MORNING_MODEL, sender) + '\n' +
                 (await utils.extractConfigurationInformationAccordingToSpecifiedParameters('suffix',
                 MORNING_MODEL)).replace(r'{number}', str(rank)))
             return send
@@ -107,7 +107,7 @@ async def goodMorningInformation(userQQ, userGroup):
         # Sleep time cannot exceed 24 hours
         await userRegistration(userQQ, MORNING_MODEL)
         if sleepingTime < 24:
-            send += await utils.extractRandomWords(MORNING_MODEL)
+            send += await utils.extractRandomWords(MORNING_MODEL, sender)
             # Calculate Wake Up Ranking
             rank = await addToCheckInPoolAndGetRanking(userQQ, userGroup, MORNING_MODEL)
             send += ((await utils.extractConfigurationInformationAccordingToSpecifiedParameters('suffix',
@@ -125,14 +125,14 @@ async def goodMorningInformation(userQQ, userGroup):
                             (await utils.readConfiguration(MORNING_MODEL))['too_little_sleep'])
         else:
             rank = await addToCheckInPoolAndGetRanking(userQQ, userGroup, MORNING_MODEL)
-            send += (await utils.extractRandomWords(MORNING_MODEL) + '\n'
+            send += (await utils.extractRandomWords(MORNING_MODEL, sender) + '\n' +
                 (await utils.extractConfigurationInformationAccordingToSpecifiedParameters('suffix',
                 MORNING_MODEL)).replace(r'{number}', str(rank)))
         return send
     return ERROR
 
 
-async def goodNightInformation(userQQ, userGroup):
+async def goodNightInformation(userQQ, userGroup, sender):
     # Check if registered
     registered = await utils.userInformationReading(userQQ)
     send = await utils.at(userQQ)
@@ -141,7 +141,7 @@ async def goodNightInformation(userQQ, userGroup):
         await userRegistration(userQQ, NIGHT_MODEL)
         # Add to check-in pool and get ranking
         rank = await addToCheckInPoolAndGetRanking(userQQ, userGroup, NIGHT_MODEL)
-        send += (await utils.extractRandomWords(NIGHT_MODEL) + '\n'
+        send += (await utils.extractRandomWords(NIGHT_MODEL, sender) + '\n' +
                 (await utils.extractConfigurationInformationAccordingToSpecifiedParameters('suffix',
                 NIGHT_MODEL)).replace(r'{number}', str(rank)))
         return send
@@ -155,7 +155,7 @@ async def goodNightInformation(userQQ, userGroup):
         if await utils.judgeTimeDifference(registered['accurateTime']) >= 12:
             await userRegistration(userQQ, NIGHT_MODEL)
             rank = await addToCheckInPoolAndGetRanking(userQQ, userGroup, NIGHT_MODEL)
-            send += (await utils.extractRandomWords(NIGHT_MODEL) + '\n'
+            send += (await utils.extractRandomWords(NIGHT_MODEL, sender) + '\n' +
                 (await utils.extractConfigurationInformationAccordingToSpecifiedParameters('suffix',
                 NIGHT_MODEL)).replace(r'{number}', str(rank)))
             return send
@@ -163,12 +163,12 @@ async def goodNightInformation(userQQ, userGroup):
         soberTime = await utils.judgeTimeDifference(registered['accurateTime'])
         # too little time
         if soberTime <= 4:
-            send += await utils.extractConfigurationInformationAccordingToSpecifiedParameters('unable_to_trigger', MORNING_MODEL)
+            send += await utils.extractConfigurationInformationAccordingToSpecifiedParameters('unable_to_trigger', NIGHT_MODEL)
             return send
         # sober time cannot exceed 24 hours
         await userRegistration(userQQ, NIGHT_MODEL)
         if soberTime < 24:
-            send += await utils.extractRandomWords(NIGHT_MODEL)
+            send += await utils.extractRandomWords(NIGHT_MODEL, sender)
             rank = await addToCheckInPoolAndGetRanking(userQQ, userGroup, NIGHT_MODEL)
             send += ((await utils.extractConfigurationInformationAccordingToSpecifiedParameters('suffix',
                 NIGHT_MODEL)).replace(r'{number}', str(rank)) + '\n')
@@ -181,7 +181,7 @@ async def goodNightInformation(userQQ, userGroup):
                             random.choice((await utils.readConfiguration(NIGHT_MODEL))['working_hours'])['content'])
         else:
             rank = await addToCheckInPoolAndGetRanking(userQQ, userGroup, NIGHT_MODEL)
-            send += (await utils.extractRandomWords(NIGHT_MODEL) + '\n'
+            send += (await utils.extractRandomWords(NIGHT_MODEL, sender) + '\n' +
                 (await utils.extractConfigurationInformationAccordingToSpecifiedParameters('suffix',
                 NIGHT_MODEL)).replace(r'{number}', str(rank)))
         return send

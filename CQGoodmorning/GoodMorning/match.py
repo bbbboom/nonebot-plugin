@@ -21,7 +21,7 @@ async def starter(bot):
         thesaurusReady = True
     
 
-async def mainProgram(bot, userQQ, userGroup, msg):
+async def mainProgram(bot, userQQ, userGroup, msg, sender):
     # Clean at
     msg = await cleanUpExcessContent(msg)
     # Recognition instruction
@@ -31,7 +31,7 @@ async def mainProgram(bot, userQQ, userGroup, msg):
     # Good morning match
     for i in goodMorningInstructionSet:
         if msg == i:
-            send = await main.goodMorningInformation(userQQ, userGroup)
+            send = await main.goodMorningInformation(userQQ, userGroup, sender)
             break
     mark = await utils.sendMsg(bot, userGroup, send)
     if mark:
@@ -39,7 +39,7 @@ async def mainProgram(bot, userQQ, userGroup, msg):
     # Good night detection
     for i in goodNightInstructionSet:
         if msg == i:
-            send = await main.goodNightInstructionSet(userQQ, userGroup)
+            send = await main.goodNightInformation(userQQ, userGroup, sender)
             break
     mark = await utils.sendMsg(bot, userGroup, send)
     if mark:

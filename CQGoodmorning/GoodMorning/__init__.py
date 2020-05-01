@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from nonebot import *
-from . import initialization
 from . import match
 
 bot = get_bot()
@@ -11,5 +10,6 @@ async def entranceFunction(context):
     msg = str(context["message"])
     userQQ = context["user_id"]
     userGroup = context["group_id"]
+    sender = context['sender']
     await match.starter(bot)
-    await match.mainProgram(bot, userQQ, userGroup, msg)
+    await match.mainProgram(bot, userQQ, userGroup, msg, sender)
