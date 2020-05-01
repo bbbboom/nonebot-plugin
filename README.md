@@ -23,7 +23,7 @@
 ## 早晚安
 关注睡眠时间，灵活调整生物钟
 
-注：编辑任何文件请保证在 UTF-8 编码下，若为 ANSI，使用 NotePad++ 编码 -> 转为 UTF-8 编码。
-
 ## 使用说明
 文档：https://fz6m.github.io/plugin-press/
+
+注：编辑任何文件请保证在 UTF-8 编码下，若为 ANSI，使用 NotePad++ 编码 -> 转为 UTF-8 编码。
