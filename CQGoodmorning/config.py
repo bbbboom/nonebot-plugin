@@ -1,7 +1,15 @@
-# -*- coding: utf-8 -*-
 
-ERROR = 'ERROR'
-SUCCESS = 'SUCCESS'
-MORNING_MODEL = 'MORNING_MODEL'
-NIGHT_MODEL = 'NIGHT_MODEL'
-UNDEFINED = 'UNDEFINED'
+from nonebot.default_config import *
+
+'''
+notebot-bot
+├── bot.py
+└── config.py
+'''
+
+COMMAND_START = {''}
+
+HOST = '127.0.0.1'
+PORT = 8080
+
+
