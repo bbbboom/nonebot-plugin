@@ -32,10 +32,10 @@ async def get(model,key = '',searchTag = []):
         postData = {"search":str(key),"following":False,"categoryName":"SELF_POST","categoryId":"chart","tags":tags,"order":"TIME_DESC","limit":20,"offset":0}
     # 异步 request
     async with aiohttp.ClientSession() as session:
-        async with session.post(url,data=ujson.dumps(postData),headers = header,timeout = 5) as res:
+        async with session.post(url,data=ujson.dumps(postData),headers = header,timeout = 10) as res:
             jsonStr = await res.json()
     # 同步 request
-    # jsonStr = requests.post(url,data=ujson.dumps(postData),headers = header,timeout = 5).json()
+    # jsonStr = requests.post(url,data=ujson.dumps(postData),headers = header,timeout = 10).json()
             if jsonStr['result'] != True:
                 print('requests lose')
                 return 'error'

@@ -9,7 +9,7 @@ async def reasonable(msg,keyList,model = 'id'):
                 command = msg.split(' ')[0]
                 number = msg.split(' ')[1]
                 # ' ' 模式
-                if command == key and int(number) > 900 and int(number) < 15000:
+                if command == key and int(number) > 900 and int(number) < 30000:
                     response[0] = 1
                     response[1] = int(number)
             except:
@@ -17,7 +17,7 @@ async def reasonable(msg,keyList,model = 'id'):
                     # '.' 模式
                     if msg.find('.' + str(key)) != -1:
                         number = int(msg[1 + len(key):])
-                        if int(number) > 900 and int(number) < 15000:
+                        if int(number) > 900 and int(number) < 30000:
                             response[0] = 1
                             response[1] = int(number)
                 except:
