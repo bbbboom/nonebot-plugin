@@ -91,7 +91,7 @@ async def goodMorningInformation(userQQ, userGroup, sender):
             send += await utils.extractConfigurationInformationAccordingToSpecifiedParameters('triggered', MORNING_MODEL)
             return send
         # Good morning no twice a day
-        if registered['time'] != await utils.getTheCurrentHour():
+        if registered['time'] != await utils.getTheCurrentTime():
             await userRegistration(userQQ, MORNING_MODEL)
             rank = await addToCheckInPoolAndGetRanking(userQQ, userGroup, MORNING_MODEL)
             send += (await utils.extractRandomWords(MORNING_MODEL, sender) + '\n' +
