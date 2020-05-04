@@ -25,7 +25,7 @@ async def mainProgram(bot, userQQ, userGroup, msg, sender):
     # Clean at
     msg = await cleanUpExcessContent(msg)
     # Recognition instruction
-    goodMorningInstructionSet = ['早', '早安', '哦哈哟', 'ohayo', 'ohayou', 'ohayo']
+    goodMorningInstructionSet = ['早', '早安', '哦哈哟', 'ohayo', 'ohayou', '早安啊', '早啊', '早上好']
     goodNightInstructionSet = ['晚', '晚安', '哦呀斯密', 'oyasumi', 'oyasimi', '睡了', '睡觉了']
     send = ''
     # Good morning match
