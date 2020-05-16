@@ -26,6 +26,9 @@
 ## 小故事
 应群友要求制作的无聊 cp 小故事
 
+## 一言
+闲情雅致，闲的没事
+
 ## 使用说明
 文档：https://fz6m.github.io/plugin-press/
 
