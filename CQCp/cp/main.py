@@ -3,6 +3,7 @@
 import ujson
 import os
 import random
+import aiofiles
 
 async def getParameters(msg):
     try:
@@ -15,7 +16,7 @@ async def getParameters(msg):
 
 async def readInfo(path):
     if os.path.exists(path):
-        async with open(path, 'r', encoding='utf-8') as f:
+        async with aiofiles.open(path, 'r', encoding='utf-8') as f:
             return ujson.loads(await f.read().strip())
     raise Exception
 
