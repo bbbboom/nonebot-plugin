@@ -17,7 +17,7 @@ async def getParameters(msg):
 async def readInfo(path):
     if os.path.exists(path):
         async with aiofiles.open(path, 'r', encoding='utf-8') as f:
-            return ujson.loads(await f.read().strip())
+            return ujson.loads((await f.read()).strip())
     raise Exception
 
 async def getMessage(bot, userGroup, msg):
