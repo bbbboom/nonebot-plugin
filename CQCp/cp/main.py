@@ -15,8 +15,8 @@ async def getParameters(msg):
 
 async def readInfo(path):
     if os.path.exists(path):
-        with open(path, 'r', encoding='utf-8') as f:
-            return ujson.loads(f.read().strip())
+        async with open(path, 'r', encoding='utf-8') as f:
+            return ujson.loads(await f.read().strip())
     raise Exception
 
 async def getMessage(bot, userGroup, msg):
