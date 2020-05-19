@@ -1,6 +1,6 @@
 # nonebot-plugin
 
-基于 NoneBot 开发的几个机器人插件
+一些 NoneBot 的插件
 
 ## TwitterPush
 稳定的推送关注用户的 Twitter 最新动态到群内
