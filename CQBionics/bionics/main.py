@@ -17,7 +17,11 @@ async def repeatInterruption():
     p = './bionics/data/tips/repeater.json'
     return await utils.randomListSelection(p, 'data')
 
-async def messageDetection(msg, bot, userGroup):
+async def messageDetection(msg, bot, userGroup, userQQ):
+    p = './bionics/data/config/shield.json'
+    for i in (await utils.readJson(p))['qq']:
+        if str(i) == str(userQQ):
+            return
     send = ''
     if await utils.whetherAtBot(msg):
         send = await beAt()
@@ -41,10 +45,11 @@ async def repeatTheMainProgramInterruption(msg, userGroup, bot):
         await utils.writeJson(p, messageStructure)
         return
     if msg == content['data']:
-        if content['number'] == 5:
+        if content['number'] == 4:
             send = await repeatInterruption()
             await bot.send_group_msg(group_id = userGroup, message = send)
             content['number'] = 0
+            content['data'] = send
             await utils.writeJson(p, content)
             return
         content['number'] += 1

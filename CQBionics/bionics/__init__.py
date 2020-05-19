@@ -10,6 +10,7 @@ bot = get_bot()
 async def entranceFunction(context):
     msg = str(context["message"])
     userGroup = context["group_id"]
+    userQQ = context["user_id"]
     await utils.initialization()
-    await main.messageDetection(msg, bot, userGroup)
+    await main.messageDetection(msg, bot, userGroup, userQQ)
     await main.repeatTheMainProgramInterruption(msg, userGroup, bot)
