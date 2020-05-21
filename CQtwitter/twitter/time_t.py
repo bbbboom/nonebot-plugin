@@ -10,7 +10,7 @@ import aiofiles
 async def list(bot):
     p = "twitterConfig/user.txt"
     if os.path.exists(p):
-        async with aiofiles.open(p,"r") as f:
+        async with aiofiles.open(p, "r", encoding = 'utf-8') as f:
             lines = await f.readlines()
             for line in lines:
                 user = line.strip().split(" ")

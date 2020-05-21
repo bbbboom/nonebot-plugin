@@ -7,7 +7,7 @@ async def qunfa(name,bot,str):
     if not os.path.exists('twitterConfig/qun.txt'):
         return
     else:
-        async with aiofiles.open('twitterConfig/qun.txt', 'r') as n:
+        async with aiofiles.open('twitterConfig/qun.txt', 'r', encoding = 'utf-8') as n:
             lines = await n.readlines()
             for line in lines:
                 line = line.strip()

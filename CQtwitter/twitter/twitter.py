@@ -11,7 +11,7 @@ import aiofiles
 async def name_set(msg,name):
     p = "twitterConfig/fy_plus.txt"
     if os.path.exists(p):
-        async with aiofiles.open(p,"r") as f:
+        async with aiofiles.open(p, "r", encoding = 'utf-8') as f:
             lines = await f.readlines()
             for line in lines:
                 line = line.strip().split(" ")
