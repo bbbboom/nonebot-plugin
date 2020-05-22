@@ -12,5 +12,6 @@ async def entranceFunction(context):
     userGroup = context["group_id"]
     userQQ = context["user_id"]
     await utils.initialization()
+    await utils.parameterPathSetting('./bionics/data/config/parameterSet.json')
     await main.messageDetection(msg, bot, userGroup, userQQ)
     await main.repeatTheMainProgramInterruption(msg, userGroup, bot)

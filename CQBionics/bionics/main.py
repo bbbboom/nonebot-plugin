@@ -26,7 +26,10 @@ async def messageDetection(msg, bot, userGroup, userQQ):
     if await utils.whetherAtBot(msg):
         send = await beAt()
     elif msg.find('亲爱的') != -1:
-        send = await echo()
+        # Prevent frequent triggering
+        if await timingDevice('testing'):
+            send = await echo()
+            await timingDevice('recording')
     if send == '':
         return
     await bot.send_group_msg(group_id = userGroup, message = send)
@@ -54,4 +57,21 @@ async def repeatTheMainProgramInterruption(msg, userGroup, bot):
             return
         content['number'] += 1
         await utils.writeJson(p, content)
+    else:
+        content['data'] = msg
+        await utils.writeJson(p, content) 
 
+async def timingDevice(model = 'recording'):
+    p = './bionics/data/config/timeLimit.json'
+    if model == 'recording':
+        await utils.timeToFile(p, await utils.getAccurateTimeNow())
+    else:
+        # First check if there is a file
+        content = await utils.readJson(p)
+        if content == FAILURE:
+            return True
+        lastTime = await utils.timeReadFromFile(p)
+        timeDifference = (await utils.getTimeDifference(lastTime, model = SECOND))
+        if timeDifference > await utils.parameterReadingAndWriting('timeInterval'):
+            return True
+        return False

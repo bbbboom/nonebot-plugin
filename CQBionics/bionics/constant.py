@@ -8,3 +8,6 @@ HOUR = 'hour'
 MINUTE = 'minute'
 SECOND = 'second'
 ALL = 'all'
+
+READ = 'read'
+WRITE = 'write'

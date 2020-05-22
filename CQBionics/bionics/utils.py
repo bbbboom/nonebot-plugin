@@ -41,22 +41,33 @@ async def getAccurateTimeNow():
     return nowDate
 
 async def getTimeDifference(original, model = ALL):
+    a = parse(original)
+    b = parse(await getAccurateTimeNow())
+    seconds = int((b - a).total_seconds())
     if model == ALL:
-        timeNow = await getAccurateTimeNow()
-        a = parse(original)
-        b = parse(timeNow)
-        seconds = int((b - a).total_seconds())
         return {
             DAY: int((b - a).days),
             HOUR: int(seconds / 3600),
-            MINUTE: int((seconds % 3600) / 60),
-            SECOND: int(seconds % 60)
+            MINUTE: int((seconds % 3600) / 60), # The rest
+            SECOND: int(seconds % 60) # The rest
         }
     if model == DAY:
-        a = parse(str(original))
         b = parse(await getTheCurrentTime())
         return int((b - a).days)
+    if model == MINUTE:
+        return int(seconds / 60)
+    if model == SECOND:
+        return seconds
 
+async def timeToFile(path, time, parameter = 'default'):
+    timeStructure = {
+        parameter: str(time)
+    }
+    await writeJson(path, timeStructure)
+
+async def timeReadFromFile(path, parameter = 'default'):
+    return (await readJson(path))[parameter]
+    
 # ——————————————————————————————————————————————————————————————————————————————
 
 # Common tools
@@ -92,6 +103,31 @@ async def writeJson(p, info):
     async with aiofiles.open(p, 'w', encoding='utf-8') as f:
         await f.write(ujson.dumps(info))
     return SUCCESS
+
+# ——————————————————————————————————————————————————————————————————————————————
+
+convenientParameterReadingAndWritingPath = ''
+
+# Convenient parameter operation
+async def parameterPathSetting(path):
+    global convenientParameterReadingAndWritingPath
+    convenientParameterReadingAndWritingPath = path
+
+async def parameterReadingAndWriting(parameter, value = '', model = READ):
+    content = await readJson(convenientParameterReadingAndWritingPath)
+    if model == READ:
+        if content == FAILURE:
+            return FAILURE
+        return content[parameter]
+    if model == WRITE:
+        if content == FAILURE:
+            writeStructure = {
+                parameter: value
+            }
+            await writeJson(convenientParameterReadingAndWritingPath, writeStructure)
+        else:
+            content[parameter] = value
+            await writeJson(convenientParameterReadingAndWritingPath, content)
 
 # ——————————————————————————————————————————————————————————————————————————————
 
