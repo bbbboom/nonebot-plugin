@@ -9,4 +9,5 @@ bot = get_bot()
 async def _(context):
     msg = context["message"]
     userGroup = context["group_id"]
-    await main.pictureRotation(msg, bot, userGroup)
+    if not await main.checkIfItIsBlocked(userGroup):
+        await main.pictureRotation(msg, bot, userGroup)

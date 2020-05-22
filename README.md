@@ -35,6 +35,9 @@
 ## 仿生回复
 测试中...
 
+## Pixiv 看图
+测试中...
+
 ## 使用说明
 文档：https://fz6m.github.io/plugin-press/
 

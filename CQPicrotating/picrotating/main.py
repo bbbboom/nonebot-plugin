@@ -5,6 +5,10 @@ import aiohttp
 import random
 from PIL import Image
 import os
+try:
+    import ujson
+except:
+    import json as ujson
 
 async def savePicture(img):
     p = './picrotating/data/pic.jpg'
@@ -55,3 +59,14 @@ async def folderDetection():
     p = './picrotating/data'
     if not os.path.exists(p):
         os.mkdir(p)
+
+
+async def checkIfItIsBlocked(userGroup):
+    p = './picrotating/config/shield.json'
+    async with aiofiles.open(p, 'r', encoding = 'utf-8') as f:
+        content = await f.read()
+    content = ujson.loads(content)
+    for i in content['group']:
+        if str(i) == str(userGroup):
+            return True
+    return False
