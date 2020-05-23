@@ -35,12 +35,12 @@ async def getBase():
     return GetPictures(content['account'], content['password'])
 
 async def checkTheMessage(msg, bot, userGroup, userQQ):
-    drawingCommand = ['cu', 'Cu', '图来', '色图来', '不够色']
+    drawingCommand = ['图来', '不够']
     back = await utils.commandMatching(msg, drawingCommand)
     if back['mark']:
         await sendPictures(userGroup, bot)
     
-    getResourceCommand = ['kkp']
+    getResourceCommand = ['kkt']
     p = './pixiv/data/administrators.json'
     if await utils.authorityInspection(p, userQQ):
         back = await utils.commandMatching(msg, getResourceCommand, BLURRY)
