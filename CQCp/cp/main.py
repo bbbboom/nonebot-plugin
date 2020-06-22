@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 
-import ujson
+try:
+    import ujson
+except:
+    import json as ujson
+    
 import os
 import random
 import aiofiles
