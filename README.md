@@ -41,6 +41,9 @@
 ## V 运势
 喜欢的 vtb 带来你每天的运势
 
+## 网易云 Mlog 视频下载
+测试插件
+
 ## 使用说明
 文档：https://fz6m.github.io/plugin-press/
 ### 下载插件

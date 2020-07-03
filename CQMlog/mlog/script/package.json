@@ -1,0 +1,20 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "main": "test.js",
+  "license": "MIT",
+  "scripts": {
+    "bab": "yarn run babel original.js -o script.js"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.10.4",
+    "core-js": "3",
+    "puppeteer-core": "^5.0.0",
+    "regenerator-runtime": "^0.13.5"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.4",
+    "@babel/core": "^7.10.4",
+    "@babel/preset-env": "^7.10.4"
+  }
+}
