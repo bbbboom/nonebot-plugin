@@ -8,7 +8,10 @@ bot = get_bot()
 
 @bot.on_message("group")
 async def entranceFunction(context):
-    msg = context["message"][0]['data']['text']
+    try:
+        msg = context["message"][0]['data']['text']
+    except:
+        return
     userGroup = context["group_id"]
     userQQ = context["user_id"]
     await utils.initialization()
