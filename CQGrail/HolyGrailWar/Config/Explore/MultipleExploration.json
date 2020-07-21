@@ -10,20 +10,20 @@
         {
             "id": 2,
             "event": "扶老太太过马路",
-            "goldmax": 106,
-            "goldmin": 72
+            "goldmax": 250,
+            "goldmin": 128
         },
         {
             "id": 3,
             "event": "在便利店捡垃圾",
-            "foodmax": 26,
-            "foodmin": 6
+            "foodmax": 46,
+            "foodmin": 16
         },
         {
             "id": 4,
             "event": "直播挑战",
-            "goldmax": 106,
-            "goldmin": 72
+            "goldmax": 250,
+            "goldmin": 128
         },
         {
             "id": 5,
@@ -35,14 +35,14 @@
         {
             "id": 6,
             "event": "探索山洞",
-            "goldmax": 106,
-            "goldmin": 72
+            "goldmax": 250,
+            "goldmin": 128
         },
         {
             "id": 7,
             "event": "野兽材料交易",
-            "foodmax": 26,
-            "foodmin": 6
+            "foodmax": 46,
+            "foodmin": 16
         },
         {
             "id": 8,
@@ -54,14 +54,14 @@
         {
             "id": 9,
             "event": "和流浪狗抢包子",
-            "foodmax": 26,
-            "foodmin": 6
+            "foodmax": 46,
+            "foodmin": 16
         },
         {
             "id": 10,
             "event": "当众贩剑",
-            "foodmax": 26,
-            "foodmin": 6
+            "foodmax": 46,
+            "foodmin": 16
         },
         {
             "id": 11,
@@ -106,8 +106,8 @@
         {
             "id": 17,
             "event": "行窃",
-            "goldmax": 106,
-            "goldmin": 72
+            "goldmax": 250,
+            "goldmin": 128
         },
         {
             "id": 18,
@@ -119,20 +119,20 @@
         {
             "id": 19,
             "event": "创业被收购",
-            "goldmax": 106,
-            "goldmin": 72
+            "goldmax": 250,
+            "goldmin": 128
         },
         {
             "id": 20,
             "event": "打猎",
-            "goldmax": 106,
-            "goldmin": 72
+            "goldmax": 250,
+            "goldmin": 128
         },
         {
             "id": 21,
             "event": "搬砖",
-            "goldmax": 106,
-            "goldmin": 72
+            "goldmax": 250,
+            "goldmin": 128
         },
         {
             "id": 22,
@@ -157,20 +157,26 @@
         {
             "id": 25,
             "event": "森林探险",
-            "goldmax": 106,
-            "goldmin": 72
+            "goldmax": 250,
+            "goldmin": 128
         },
         {
             "id": 26,
-            "event": "卖小黄书",
-            "goldmax": 106,
-            "goldmin": 72
+            "event": "多人运动",
+            "goodsid": 20,
+            "amount": 1
         },
         {
             "id": 27,
-            "event": "变卖不锈钢盆",
-            "goldmax": 106,
-            "goldmin": 72
+            "event": "雷霆嘎巴",
+            "goodsid": 21,
+            "amount": 1
+        },
+        {
+            "id": 28,
+            "event": "夺取圣杯",
+            "goodsid": 18,
+            "amount": 1
         }
     ]
 }

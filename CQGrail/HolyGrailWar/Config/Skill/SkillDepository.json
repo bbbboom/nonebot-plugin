@@ -77,6 +77,13 @@
             "maximum_combat_strength": 40,
             "minimum_combat_strength": 10,
             "special": true
+        },
+        {
+            "id": 12,
+            "name": "财 富 密 码",
+            "introduce": "厉害了我的中国",
+            "maximum_combat_strength": 50,
+            "minimum_combat_strength": 20
         }
     ]
 }

@@ -8,8 +8,8 @@
         {
             "id":2,
             "event":"从森林里挖出了 {gold} 金币",
-            "goldmax":50,
-            "goldmin":30
+            "goldmax":500,
+            "goldmin":300
         },
         {
             "id":3,
@@ -38,7 +38,7 @@
         {
             "id":7,
             "event":"遇到一个卖茶叶的，但是反过去骗了对方很多茶叶，泡了1杯昏睡红茶。",
-            "goodsid":3,
+            "goodsid":12,
             "amount":1
         },
         {
@@ -86,8 +86,8 @@
 		{
 			"id":14,
             "event":"被推荐品尝了老八蜜汁晓汉堡，获得 [蜜汁晓汉堡x1] ，但引发战争后遗症治疗花了 {gold} 金币。",
-            "goldmax":500,
-            "goldmin":30,
+            "goldmax":1500,
+            "goldmin":500,
             "type":"loss",
             "goodsid":17,
             "amount":1
@@ -97,6 +97,21 @@
             "event":"遇到了渣渣辉，玩了三分钟《贪玩蓝月》，得到了一把屠龙宝刀。",
             "goodsid":3,
             "amount":1
-		}
+        },
+        {
+            "id":16,
+            "event":"时间不足参加了罗老师的时间管理课程，花了学费 {gold} 金币，获得 [时间管理秘籍x1]。",
+            "goldmax":3000,
+            "goldmin":2000,
+            "type":"loss",
+            "goodsid":20,
+            "amount":1
+        },
+        {
+            "id":17,
+            "event":"在公主焊接十连抽，得到 [臭鼬头] 一个",
+            "goodsid":19,
+            "amount":1
+        }
     ]
 }
