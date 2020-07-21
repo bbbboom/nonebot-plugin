@@ -59,7 +59,7 @@ async def followerList(userQQ):
                     str(e['combat_effectiveness']['skill']['total_combat_strength']) + ')\n' +
                     '  共享战斗力：+' + str(e['combat_effectiveness']['shared_combat_effectiveness']) +
                     '（共享平衡-' + 
-                    str(await Utils3.computingSharedForces(e['qq'], model = 'shared_balance')) +
+                    str(round(await Utils3.computingSharedForces(e['qq'], model = 'shared_balance'), 1)) +
                     '%）\n' + '  全服排名：')
             if e['combat_effectiveness']['ranking'] > 200:
                 msg += '千里之外'
@@ -328,7 +328,7 @@ async def checkWhetherThereAreAttackProps(userQQ):
     if knapsack == []:
         return 0
     listOfProps = []
-    combatableItemsList = [3, 4, 6, 12]
+    combatableItemsList = [3, 4, 6, 12, 18, 19, 20]
     for k in knapsack:
         if k['id'] in combatableItemsList:
             listOfProps.append(k)

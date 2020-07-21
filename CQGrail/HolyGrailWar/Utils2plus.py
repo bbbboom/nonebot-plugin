@@ -77,7 +77,7 @@ async def calculatingFinalDamage(userQQ, listOfAntiVirusItems, hurt):
             damage = hurt - 20
             if damage < 0:
                 damage = 0
-            msg += '拥有 [医用外科口罩]，免疫 20 点病毒伤害，实际伤害为 ' + str(damage) + ' 点'
+            msg += '拥有 [狗妈]，免疫 20 点病毒伤害，实际伤害为 ' + str(damage) + ' 点'
             # Deductions
             await Utils2.deductionOfGoods(userQQ, 7, 1)
             return [msg, damage]
