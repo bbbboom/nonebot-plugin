@@ -2,7 +2,7 @@
 
 一些 NoneBot 即开即用的插件
 
-🔥使用最多 | 🚀热门插件
+🔥使用最多 | 🚀热门插件 | 🆕最新插件
 
 ## TwitterPush
 稳定的推送关注用户的 Twitter 最新动态到群内
@@ -47,9 +47,9 @@
 
 测试插件
 
-## 丢人爬
+## 丢人爬🆕
 
-丢人，爬
+乱丢群友，解锁更多爬的姿势（By [clague](https://github.com/clague)）
 
 ## 使用说明📚
 文档：https://fz6m.github.io/plugin-press/
