@@ -46,7 +46,7 @@
 ## 网易云 Mlog 视频下载
 测试插件
 
-## 使用说明
+## 使用说明📚
 文档：https://fz6m.github.io/plugin-press/
 ### 下载插件
 如果只使用某个插件，请直接在 [releases](https://github.com/fz6m/nonebot-plugin/releases) 内下载对应的压缩包即可，没有必要拉取整个项目。
