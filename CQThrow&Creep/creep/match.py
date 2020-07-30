@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from asyncio.windows_events import NULL
 from .constant import *
 from .utils import commandMatching, pictureCqCode
 from .throw import throw, creep
