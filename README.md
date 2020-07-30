@@ -49,7 +49,7 @@
 
 ## 丢人爬🆕
 
-乱丢群友，解锁更多爬的姿势（By [clague](https://github.com/clague)）
+解锁更多爬与丢的姿势（By [clague](https://github.com/clague)）
 
 ## 使用说明📚
 文档：https://fz6m.github.io/plugin-press/
