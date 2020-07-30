@@ -53,6 +53,8 @@
 
 ## 使用说明📚
 文档：https://fz6m.github.io/plugin-press/
+### 兼容性
+本项目插件对新旧版本 Nonebot 全部兼容。
 ### 下载插件
 如果只使用某个插件，请直接在 [releases](https://github.com/fz6m/nonebot-plugin/releases) 内下载对应的压缩包即可，没有必要拉取整个项目。
 ### 编辑文件
