@@ -199,7 +199,7 @@ async def statisticsOfSingleCombatPower(userQQ, id):
 
 async def judgeTheBattle(userQQ, targetQQ, id):
     userQQCombatEffectiveness = await statisticsOfSingleCombatPower(userQQ, id)
-    targetQQCombatEffectiveness = await statisticsOfSingleCombatPower(userQQ, 0)
+    targetQQCombatEffectiveness = await statisticsOfSingleCombatPower(targetQQ, 0)
     if userQQCombatEffectiveness >= targetQQCombatEffectiveness:
         return 1
     return 0
