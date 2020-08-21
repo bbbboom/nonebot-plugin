@@ -71,7 +71,7 @@ async def get_circle_avatar(avatar, size):
     draw.ellipse((0, 0, size * scale, size * scale), fill=255)
     mask = mask.resize((size, size), Image.ANTIALIAS)
 
-    ret_img = avatar.copy()
+    ret_img = avatar.resize((size, size), Image.ANTIALIAS)
     ret_img.putalpha(mask)
 
     return ret_img
