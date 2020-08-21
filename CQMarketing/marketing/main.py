@@ -13,14 +13,13 @@ async def getParameters(msg):
                 parameter['statement'] = msgList[3]
             else:
                 parameter['statement'] = ''
-            return msgList
+            return parameter
         else:
             parameter['status'] = False
             return parameter
     except:
         parameter['status'] = False
         return parameter
-
 
 async def getMessage(bot, userGroup, msg):
     parameter = await getParameters(msg)
@@ -37,5 +36,3 @@ async def getMessage(bot, userGroup, msg):
     else:
         content = content.replace('[statement]', parameter['statement'])
     await bot.send_group_msg(group_id = int(userGroup), message = str(content))
-
-    
