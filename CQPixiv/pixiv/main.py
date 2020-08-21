@@ -32,7 +32,7 @@ async def getBase():
         raise Exception
     if content['account'] == '' or content['password'] == '':
         raise Exception
-    return GetPictures(content['account'], content['password'])
+    return GetPictures(p, content)
 
 async def checkTheMessage(msg, bot, userGroup, userQQ):
     drawingCommand = ['图来', '不够']
@@ -47,7 +47,7 @@ async def checkTheMessage(msg, bot, userGroup, userQQ):
         if back['mark']:
             info = await downloadResourcesBasedOnId(int(back['command']))
             if info == SUCCESS:
-                content = '收集成功，不愧是你'
+                content = '收集成功，不愧是你.jpg'
             else:
                 content = '收集失败，狗妈的否定.jpg'
             await bot.send_group_msg(group_id = userGroup, message = content)
