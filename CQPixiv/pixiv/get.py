@@ -4,15 +4,28 @@ from pixivpy3 import *
 from . import utils
 from .constant import *
 import random
+import json
 
 class GetPictures():
 
-    def __init__(self, account, password):
+    def __init__(self, path, content):
         self.api = ByPassSniApi()
         self.api.require_appapi_hosts()
         self.api.set_accept_language('zh-cn')
-        self.api.login(account, password)
+        refresh_token = content.get('refresh_token')
+        if refresh_token == None or refresh_token == '':
+            self.api.login(content['account'], content['password'])
+            content['refresh_token'] = self.api.refresh_token
+            with open(path, 'w') as f:
+                f.write(json.dumps(content))
+        else:
+            # 如果有保存过的token则直接登录
+            self.api.auth(refresh_token=refresh_token)
 
+    async def __saveToken(path, content):
+        content['refresh_token'] = self.api.refresh_token
+        await utils.writeJson(path, content)
+        
     async def __getAllPictures(self, id):
         result = {
             "data": [],
@@ -33,6 +46,9 @@ class GetPictures():
         return result
 
     async def __organizePictures(self, result):
+        # 如果获取到的列表为空则跳过
+        if len(result['data']) <= 0:
+            raise Exception
         newResult = {
             "data": [],
             "number": 0,
@@ -86,5 +102,4 @@ class GetPictures():
             return FAILURE
         return random.choice(random.choice(content['data'])['cat_url'])
 
-            
-            
+
