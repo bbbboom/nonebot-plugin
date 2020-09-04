@@ -96,6 +96,8 @@ async def readJson(p):
         return FAILURE
     async with aiofiles.open(p, 'r', encoding='utf-8') as f:
         content = await f.read()
+    if content == None or content == '':
+        return FAILURE
     content = ujson.loads(content)
     return content
 
